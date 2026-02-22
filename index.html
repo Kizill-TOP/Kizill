@@ -13,16 +13,17 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             padding: 16px;
+            overflow-x: hidden;
         }
 
-        /* ФОН С ГРАДИЕНТНОЙ ПРОЗРАЧНОСТЬЮ (слева 0% -> справа 75%) */
+        /* ФОН С ГРАДИЕНТНОЙ ПРОЗРАЧНОСТЬЮ */
         body::before {
             content: "";
             position: fixed;
@@ -50,7 +51,7 @@
             z-index: -1;
         }
 
-        /* КОТ В УГЛУ — абсолютное позиционирование */
+        /* КОТ В УГЛУ */
         .cat-corner {
             position: fixed;
             bottom: 20px;
@@ -60,49 +61,266 @@
             z-index: 10;
             opacity: 0.9;
             transition: transform 0.3s ease;
-            pointer-events: none; /* чтобы не мешал кликать по кнопкам */
+            cursor: pointer;
         }
         
         .cat-corner img {
             width: 100%;
             height: auto;
             display: block;
+            pointer-events: none;
         }
         
         .cat-corner:hover {
             transform: scale(1.1) rotate(-3deg);
         }
 
-        /* ГЛАВНЫЙ БЛОК — УМЕНЬШИЛ, УБРАЛ ДРОЖАНИЕ, ОСВЕТЛИЛ */
+        /* Мурчалка (аудио для кота) - скрытый элемент */
+        #cat-purr {
+            display: none;
+        }
+
+        /* ГЛАВНЫЙ БЛОК */
         .card {
-            max-width: 400px; /* было 480px — уменьшил */
+            max-width: 400px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.75); /* чуть светлее */
+            background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(8px);
             border-radius: 42px 42px 32px 32px;
-            padding: 28px 22px 32px; /* чуть уменьшил паддинги */
+            padding: 28px 22px 32px;
             box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25), 0 0 0 4px #fff9e6, 0 0 0 8px rgba(255, 220, 120, 0.3);
             border: 2px solid #fff6d5;
             text-align: center;
-            /* Убрал float и glowPulse — оставил только очень легкое покачивание */
             animation: gentleFloat 4s ease-in-out infinite;
             transform-origin: center;
+            transition: transform 0.1s ease-out;
+            will-change: transform;
         }
 
-        /* Очень мягкая анимация — почти незаметно */
         @keyframes gentleFloat {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-3px); } /* было 8px — уменьшил */
+            50% { transform: translateY(-3px); }
         }
 
-        /* ОСТАЛЬНЫЕ АНИМАЦИИ ТОЖЕ ПРИГЛУШИЛ */
-        @keyframes softPulse {
-            0%, 100% { box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25), 0 0 0 4px #fff9e6, 0 0 0 8px rgba(255, 220, 120, 0.3); }
-            50% { box-shadow: 0 25px 35px rgba(255, 200, 0, 0.2), 0 0 0 5px #fff9e6, 0 0 0 10px rgba(255, 200, 100, 0.4); }
+        /* СЧЁТЧИК ПРОСМОТРОВ */
+        .views-counter {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50px;
+            padding: 8px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            border: 2px solid #ffd700;
+            font-weight: bold;
+            color: #6441a4;
+            box-shadow: 0 4px 0 #b37b48;
         }
 
+        .views-counter i {
+            color: #ff6b6b;
+        }
+
+        /* РЕАКЦИИ */
+        .reactions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .reaction-btn {
+            background: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #b37b48, 0 3px 10px rgba(0,0,0,0.2);
+            transition: all 0.1s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 2px solid #ffd700;
+        }
+
+        .reaction-btn:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #b37b48;
+        }
+
+        .reaction-btn.liked {
+            background: #ffd700;
+            color: #333;
+        }
+
+        .reaction-count {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* ЧАЙ */
+        .tea-container {
+            margin: 20px 0;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .tea-cup {
+            font-size: 4rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+            filter: drop-shadow(0 10px 5px rgba(0,0,0,0.2));
+        }
+
+        .tea-cup.drinking {
+            animation: drinkTea 0.8s ease-in-out;
+        }
+
+        @keyframes drinkTea {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-15deg) scale(1.1); }
+            50% { transform: rotate(0deg) scale(0.9); }
+            75% { transform: rotate(15deg) scale(1.1); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .tea-steam {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .tea-cup.drinking + .tea-steam {
+            opacity: 1;
+            animation: steam 0.8s ease-out;
+        }
+
+        @keyframes steam {
+            0% { transform: translateX(-50%) translateY(0); opacity: 0.8; }
+            100% { transform: translateX(-50%) translateY(-30px); opacity: 0; }
+        }
+
+        /* КОММЕНТАРИИ */
+        .comments-section {
+            margin-top: 20px;
+            border-top: 2px dashed #ffae3c;
+            padding-top: 15px;
+        }
+
+        .toggle-comments {
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #2e7d32;
+            transition: all 0.1s ease;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .toggle-comments:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #2e7d32;
+        }
+
+        .comments-box {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.3s;
+            border: 2px solid #ffae3c;
+        }
+
+        .comments-box.show {
+            max-height: 300px;
+            padding: 15px;
+            overflow-y: auto;
+        }
+
+        .comment {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .comment-content {
+            flex: 1;
+            text-align: left;
+        }
+
+        .comment-author {
+            font-weight: bold;
+            color: #6441a4;
+            font-size: 0.9rem;
+        }
+
+        .comment-text {
+            color: #333;
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+
+        .comment-time {
+            color: #999;
+            font-size: 0.7rem;
+            margin-top: 2px;
+        }
+
+        .add-comment {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .add-comment input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 20px;
+            border: 2px solid #ffae3c;
+            outline: none;
+        }
+
+        .add-comment button {
+            background: #ffae3c;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Аватарка */
         .avatar {
-            width: 120px; /* чуть уменьшил */
+            width: 120px;
             height: 120px;
             border-radius: 50%;
             object-fit: cover;
@@ -112,21 +330,19 @@
         }
 
         .avatar:hover {
-            transform: rotate(10deg) scale(1.05); /* убрал полный оборот, легче */
+            transform: rotate(10deg) scale(1.05);
         }
 
         .nick {
-            font-size: 2.5rem; /* чуть меньше */
+            font-size: 2.5rem;
             font-weight: 800;
             color: #3b2a0f;
             text-shadow: 3px 3px 0 #ffc964, 5px 5px 0 rgba(255, 140, 0, 0.3);
             margin: 5px 0 12px;
             font-family: 'Impact', 'Arial Black', sans-serif;
             text-transform: uppercase;
-            animation: none; /* убрал bounce */
         }
 
-        /* ОПИСАНИЕ */
         .description {
             background: #fffcdb;
             border-radius: 40px;
@@ -141,7 +357,6 @@
             font-family: 'Comic Sans MS', cursive, sans-serif;
         }
 
-        /* ПЛЕЕР */
         .music-player {
             background: rgba(255, 245, 215, 0.85);
             border-radius: 60px;
@@ -180,7 +395,6 @@
             box-shadow: 0 3px 0 #925f22;
         }
 
-        /* ТЕЛЕГРАМ */
         .tg-link {
             display: inline-flex;
             background: #32a8de;
@@ -203,11 +417,6 @@
             box-shadow: 0 3px 0 #146b9e;
         }
 
-        .tg-link:active {
-            transform: translateY(7px);
-            box-shadow: 0 1px 0 #146b9e;
-        }
-
         .year-note {
             font-size: 1rem;
             color: #9b6d34;
@@ -226,14 +435,25 @@
     </style>
 </head>
 <body>
-    <!-- КОТ (фиксированная позиция в углу) -->
-    <div class="cat-corner">
+    <!-- Аудио для мурлыканья кота -->
+    <audio id="cat-purr" loop>
+        <source src="https://www.soundjay.com/misc/sounds/cat-purring-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Кот -->
+    <div class="cat-corner" id="catCorner">
         <img src="https://i.supaimg.com/35109a74-45db-4273-8c8b-a2cf76a8841a/c5066638-ec29-474b-b28c-14405dbf6fca.png" 
-             alt="Котик" 
+             alt="Котик"
              onerror="this.src='https://via.placeholder.com/120/ffcc66/663d00?text=Кот'">
     </div>
 
-    <div class="card">
+    <div class="card" id="mainCard">
+        <!-- Счётчик просмотров -->
+        <div class="views-counter">
+            <i class="fas fa-eye"></i>
+            <span id="viewCount">1,337</span> просмотров
+        </div>
+
         <!-- Аватарка -->
         <div class="avatar-wrapper">
             <img class="avatar" src="https://i.imgur.com/frGapU3.jpeg" alt="Kizill_TOP">
@@ -241,6 +461,18 @@
 
         <!-- Ник -->
         <div class="nick">Kizill_TOP</div>
+
+        <!-- Реакции -->
+        <div class="reactions">
+            <button class="reaction-btn" id="likeBtn">
+                <i class="fas fa-heart"></i>
+                <span id="likeCount">128</span>
+            </button>
+            <button class="reaction-btn" id="dislikeBtn">
+                <i class="fas fa-thumbs-down"></i>
+                <span id="dislikeCount">12</span>
+            </button>
+        </div>
 
         <!-- Музыка -->
         <div class="music-player">
@@ -257,6 +489,12 @@
         </audio>
         <p style="font-size:0.75rem; margin:4px 0 0;">♫ OMFG – Hello</p>
 
+        <!-- Чай -->
+        <div class="tea-container" id="teaContainer">
+            <div class="tea-cup" id="teaCup">☕</div>
+            <div class="tea-steam">💨</div>
+        </div>
+
         <!-- Описание -->
         <div class="description">Прочитал = К@k@</div>
 
@@ -265,7 +503,236 @@
             <i class="fab fa-telegram-plane"></i>
         </a>
 
+        <!-- Комментарии -->
+        <div class="comments-section">
+            <button class="toggle-comments" id="toggleComments">
+                <i class="fas fa-comments"></i> Комментарии (3)
+            </button>
+            
+            <div class="comments-box" id="commentsBox">
+                <div class="comment">
+                    <div class="comment-avatar">👤</div>
+                    <div class="comment-content">
+                        <div class="comment-author">Летний_Чилл</div>
+                        <div class="comment-text">атмосфера лета 2016 🔥</div>
+                        <div class="comment-time">2 минуты назад</div>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-avatar">🐱</div>
+                    <div class="comment-content">
+                        <div class="comment-author">Кот_Олег</div>
+                        <div class="comment-text">мяу чай норм</div>
+                        <div class="comment-time">15 минут назад</div>
+                    </div>
+                </div>
+                
+                <div class="comment">
+                    <div class="comment-avatar">🎧</div>
+                    <div class="comment-content">
+                        <div class="comment-author">OMFG_Fan</div>
+                        <div class="comment-text">hello hello hello!!</div>
+                        <div class="comment-time">1 час назад</div>
+                    </div>
+                </div>
+                
+                <!-- Добавление комментария -->
+                <div class="add-comment">
+                    <input type="text" id="newComment" placeholder="Написать комментарий...">
+                    <button id="addCommentBtn">Отпр.</button>
+                </div>
+            </div>
+        </div>
+
         <div class="year-note">✦ лето 2016 ✦</div>
     </div>
+
+    <script>
+        // ГИРОСКОП - движение элементов
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', function(event) {
+                let gamma = event.gamma; // -90 до 90 (влево-вправо)
+                let beta = event.beta;    // -180 до 180 (вперед-назад)
+                
+                if (gamma !== null && beta !== null) {
+                    // Ограничиваем значения
+                    gamma = Math.min(30, Math.max(-30, gamma)) / 30;
+                    beta = Math.min(30, Math.max(-30, beta)) / 30;
+                    
+                    // Двигаем карточку
+                    const card = document.getElementById('mainCard');
+                    card.style.transform = `perspective(500px) rotateY(${gamma * 5}deg) rotateX(${beta * -3}deg) translateY(-3px)`;
+                }
+            });
+        } else {
+            console.log("Гироскоп не поддерживается");
+        }
+
+        // СЧЁТЧИК ПРОСМОТРОВ (увеличиваем при загрузке)
+        let views = localStorage.getItem('pageViews') ? parseInt(localStorage.getItem('pageViews')) : 1337;
+        views++;
+        localStorage.setItem('pageViews', views);
+        document.getElementById('viewCount').textContent = views.toLocaleString();
+
+        // РЕАКЦИИ
+        let likes = localStorage.getItem('likes') ? parseInt(localStorage.getItem('likes')) : 128;
+        let dislikes = localStorage.getItem('dislikes') ? parseInt(localStorage.getItem('dislikes')) : 12;
+        
+        document.getElementById('likeCount').textContent = likes;
+        document.getElementById('dislikeCount').textContent = dislikes;
+        
+        let userReaction = localStorage.getItem('userReaction') || null;
+        
+        if (userReaction === 'like') {
+            document.getElementById('likeBtn').classList.add('liked');
+        } else if (userReaction === 'dislike') {
+            document.getElementById('dislikeBtn').classList.add('liked');
+        }
+        
+        document.getElementById('likeBtn').addEventListener('click', function() {
+            if (userReaction === 'like') {
+                // Убираем лайк
+                likes--;
+                userReaction = null;
+                this.classList.remove('liked');
+            } else {
+                if (userReaction === 'dislike') {
+                    dislikes--;
+                    document.getElementById('dislikeBtn').classList.remove('liked');
+                }
+                likes++;
+                userReaction = 'like';
+                this.classList.add('liked');
+            }
+            
+            document.getElementById('likeCount').textContent = likes;
+            document.getElementById('dislikeCount').textContent = dislikes;
+            
+            localStorage.setItem('likes', likes);
+            localStorage.setItem('dislikes', dislikes);
+            localStorage.setItem('userReaction', userReaction);
+        });
+        
+        document.getElementById('dislikeBtn').addEventListener('click', function() {
+            if (userReaction === 'dislike') {
+                dislikes--;
+                userReaction = null;
+                this.classList.remove('liked');
+            } else {
+                if (userReaction === 'like') {
+                    likes--;
+                    document.getElementById('likeBtn').classList.remove('liked');
+                }
+                dislikes++;
+                userReaction = 'dislike';
+                this.classList.add('liked');
+            }
+            
+            document.getElementById('likeCount').textContent = likes;
+            document.getElementById('dislikeCount').textContent = dislikes;
+            
+            localStorage.setItem('likes', likes);
+            localStorage.setItem('dislikes', dislikes);
+            localStorage.setItem('userReaction', userReaction);
+        });
+
+        // КОТ МУРЛЫКАЕТ
+        const cat = document.getElementById('catCorner');
+        const purrAudio = document.getElementById('cat-purr');
+        let isPurring = false;
+        
+        cat.addEventListener('click', function() {
+            if (isPurring) {
+                purrAudio.pause();
+                purrAudio.currentTime = 0;
+                isPurring = false;
+                this.style.opacity = '0.9';
+            } else {
+                purrAudio.play().catch(e => console.log("Аудио не загрузилось"));
+                isPurring = true;
+                this.style.opacity = '1';
+                
+                // Останавливаем через 5 секунд автоматически
+                setTimeout(() => {
+                    if (isPurring) {
+                        purrAudio.pause();
+                        purrAudio.currentTime = 0;
+                        isPurring = false;
+                        cat.style.opacity = '0.9';
+                    }
+                }, 5000);
+            }
+        });
+
+        // ЧАЙ
+        const teaCup = document.getElementById('teaCup');
+        
+        teaCup.addEventListener('click', function() {
+            this.classList.add('drinking');
+            
+            // Анимация испарения
+            setTimeout(() => {
+                this.classList.remove('drinking');
+            }, 800);
+            
+            // Меняем иконку чая на немного другую (эффект "отпили")
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
+        });
+
+        // КОММЕНТАРИИ
+        const toggleBtn = document.getElementById('toggleComments');
+        const commentsBox = document.getElementById('commentsBox');
+        let commentsVisible = false;
+        
+        toggleBtn.addEventListener('click', function() {
+            commentsVisible = !commentsVisible;
+            commentsBox.classList.toggle('show', commentsVisible);
+            this.innerHTML = commentsVisible ? 
+                '<i class="fas fa-comments"></i> Скрыть комментарии' : 
+                '<i class="fas fa-comments"></i> Комментарии (3)';
+        });
+        
+        // Добавление комментария
+        document.getElementById('addCommentBtn').addEventListener('click', function() {
+            const input = document.getElementById('newComment');
+            const text = input.value.trim();
+            
+            if (text) {
+                const commentsContainer = document.querySelector('.comments-box');
+                const newComment = document.createElement('div');
+                newComment.className = 'comment';
+                newComment.innerHTML = `
+                    <div class="comment-avatar">👤</div>
+                    <div class="comment-content">
+                        <div class="comment-author">Гость</div>
+                        <div class="comment-text">${text}</div>
+                        <div class="comment-time">только что</div>
+                    </div>
+                `;
+                
+                // Вставляем перед формой добавления
+                commentsContainer.insertBefore(newComment, document.querySelector('.add-comment'));
+                
+                // Обновляем счётчик в кнопке
+                const commentCount = document.querySelectorAll('.comment').length;
+                document.getElementById('toggleComments').innerHTML = commentsVisible ?
+                    '<i class="fas fa-comments"></i> Скрыть комментарии' :
+                    `<i class="fas fa-comments"></i> Комментарии (${commentCount})`;
+                
+                input.value = '';
+            }
+        });
+        
+        // Enter в поле комментария
+        document.getElementById('newComment').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('addCommentBtn').click();
+            }
+        });
+    </script>
 </body>
 </html>
