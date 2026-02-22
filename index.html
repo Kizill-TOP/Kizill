@@ -23,7 +23,7 @@
             position: relative;
             padding: 16px;
             overflow-x: hidden;
-            background: #000; /* запасной */
+            background: #000;
         }
 
         /* ФОН С ГРАДИЕНТНОЙ ПРОЗРАЧНОСТЬЮ */
@@ -81,11 +81,6 @@
             transform: scale(0.95);
         }
 
-        /* Мурчалка */
-        #cat-purr {
-            display: none;
-        }
-
         /* ГЛАВНЫЙ БЛОК */
         .card {
             max-width: 400px;
@@ -97,17 +92,14 @@
             box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25), 0 0 0 4px #fff9e6, 0 0 0 8px rgba(255, 220, 120, 0.3);
             border: 2px solid #fff6d5;
             text-align: center;
-            animation: gentleFloat 4s ease-in-out infinite;
-            transform-origin: center;
-            transition: transform 0.1s ease-out;
-            will-change: transform;
+            animation: breathe 4s ease-in-out infinite;
             position: relative;
             z-index: 1;
         }
 
-        @keyframes gentleFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-3px); }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
 
         /* СЧЁТЧИК ПРОСМОТРОВ */
@@ -212,11 +204,6 @@
             100% { transform: translateX(-50%) translateY(-30px); opacity: 0; }
         }
 
-        /* ЗВУК ЧАЯ */
-        #tea-sound {
-            display: none;
-        }
-
         /* КОММЕНТАРИИ */
         .comments-section {
             margin-top: 20px;
@@ -242,11 +229,6 @@
         .toggle-comments:active {
             transform: translateY(5px);
             box-shadow: 0 2px 0 #2e7d32;
-        }
-
-        .toggle-comments:disabled {
-            opacity: 0.5;
-            pointer-events: none;
         }
 
         /* Никнейм для комментариев */
@@ -296,13 +278,13 @@
         }
 
         .comments-box.show {
-            max-height: 400px;
+            max-height: 500px;
             padding: 15px;
             overflow-y: auto;
         }
 
         .comments-list {
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
             margin-bottom: 15px;
         }
@@ -314,6 +296,7 @@
             margin-bottom: 15px;
             padding-bottom: 10px;
             border-bottom: 1px solid #ddd;
+            position: relative;
         }
 
         .comment-avatar {
@@ -351,6 +334,35 @@
             color: #999;
             font-size: 0.7rem;
             margin-top: 2px;
+        }
+
+        .comment-actions {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 5px;
+        }
+
+        .comment-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: #666;
+            padding: 2px 5px;
+        }
+
+        .comment-btn:hover {
+            color: #333;
+        }
+
+        .edit-input {
+            width: 100%;
+            padding: 5px;
+            border-radius: 10px;
+            border: 2px solid #ffae3c;
+            margin-top: 5px;
         }
 
         .add-comment {
@@ -499,16 +511,6 @@
     </style>
 </head>
 <body>
-    <!-- Аудио для мурлыканья кота -->
-    <audio id="cat-purr" preload="auto">
-        <source src="https://www.soundjay.com/misc/sounds/cat-purring-1.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Аудио для чая -->
-    <audio id="tea-sound" preload="auto">
-        <source src="https://www.soundjay.com/misc/sounds/slurp-1.mp3" type="audio/mpeg">
-    </audio>
-
     <!-- КОТ -->
     <div class="cat-corner" id="catCorner">
         <img src="https://i.supaimg.com/35109a74-45db-4273-8c8b-a2cf76a8841a/c5066638-ec29-474b-b28c-14405dbf6fca.png" 
@@ -517,7 +519,7 @@
     </div>
 
     <div class="card" id="mainCard">
-        <!-- СЧЁТЧИК ПРОСМОТРОВ (НАЧИНАЕТСЯ С 0) -->
+        <!-- СЧЁТЧИК ПРОСМОТРОВ -->
         <div class="views-counter">
             <i class="fas fa-eye"></i>
             <span id="viewCount">0</span> просмотров
@@ -531,7 +533,7 @@
         <!-- Ник -->
         <div class="nick">Kizill_TOP</div>
 
-        <!-- РЕАКЦИИ (ВСЕ С 0) -->
+        <!-- РЕАКЦИИ -->
         <div class="reactions">
             <button class="reaction-btn" id="likeBtn">
                 <i class="fas fa-heart"></i>
@@ -558,7 +560,7 @@
         </audio>
         <p style="font-size:0.75rem; margin:4px 0 0;">♫ OMFG – Hello</p>
 
-        <!-- ЧАЙ с анимацией и звуком -->
+        <!-- ЧАЙ -->
         <div class="tea-container" id="teaContainer">
             <div class="tea-cup" id="teaCup">☕</div>
             <div class="tea-steam">💨</div>
@@ -572,7 +574,7 @@
             <i class="fab fa-telegram-plane"></i>
         </a>
 
-        <!-- КОММЕНТАРИИ (С НИКНЕЙМОМ) -->
+        <!-- КОММЕНТАРИИ -->
         <div class="comments-section">
             <!-- Настройка ника -->
             <div class="nickname-setup" id="nicknameSetup">
@@ -581,14 +583,12 @@
                 <div class="current-nick" id="currentNick">Ник не установлен</div>
             </div>
 
-            <button class="toggle-comments" id="toggleComments" disabled>
-                <i class="fas fa-comments"></i> Сначала введите ник
+            <button class="toggle-comments" id="toggleComments">
+                <i class="fas fa-comments"></i> Показать комментарии
             </button>
             
             <div class="comments-box" id="commentsBox">
-                <div class="comments-list" id="commentsList">
-                    <!-- Комментарии будут добавляться сюда -->
-                </div>
+                <div class="comments-list" id="commentsList"></div>
                 
                 <div class="add-comment">
                     <input type="text" id="newComment" placeholder="Написать комментарий..." maxlength="100">
@@ -601,13 +601,16 @@
     </div>
 
     <script>
-        // ========== ИНИЦИАЛИЗАЦИЯ ==========
-        let views = 0;
-        let likes = 0;
-        let dislikes = 0;
-        let userNickname = '';
-        let userReaction = null;
-        let comments = [];
+        // ========== ЗАГРУЗКА ДАННЫХ ИЗ localStorage ==========
+        let views = localStorage.getItem('views') ? parseInt(localStorage.getItem('views')) : 0;
+        let likes = localStorage.getItem('likes') ? parseInt(localStorage.getItem('likes')) : 0;
+        let dislikes = localStorage.getItem('dislikes') ? parseInt(localStorage.getItem('dislikes')) : 0;
+        let userReaction = localStorage.getItem('userReaction') || null;
+        let userNickname = localStorage.getItem('userNickname') || '';
+        let comments = JSON.parse(localStorage.getItem('comments')) || [];
+
+        // Сессия для просмотров
+        let hasViewedThisSession = sessionStorage.getItem('hasViewed') === 'true';
 
         // Элементы
         const viewSpan = document.getElementById('viewCount');
@@ -616,9 +619,7 @@
         const likeBtn = document.getElementById('likeBtn');
         const dislikeBtn = document.getElementById('dislikeBtn');
         const cat = document.getElementById('catCorner');
-        const purrAudio = document.getElementById('cat-purr');
         const teaCup = document.getElementById('teaCup');
-        const teaSound = document.getElementById('tea-sound');
         const toggleComments = document.getElementById('toggleComments');
         const commentsBox = document.getElementById('commentsBox');
         const commentsList = document.getElementById('commentsList');
@@ -628,36 +629,38 @@
         const newCommentInput = document.getElementById('newComment');
         const addCommentBtn = document.getElementById('addCommentBtn');
 
-        // ========== ГИРОСКОП (УСИЛЕННЫЙ) ==========
-        if (window.DeviceOrientationEvent) {
-            window.addEventListener('deviceorientation', function(event) {
-                let gamma = event.gamma; // -90 до 90
-                let beta = event.beta;    // -180 до 180
-                
-                if (gamma !== null && beta !== null) {
-                    // Увеличил чувствительность
-                    gamma = Math.min(45, Math.max(-45, gamma)) / 30;
-                    beta = Math.min(45, Math.max(-45, beta)) / 30;
-                    
-                    const card = document.getElementById('mainCard');
-                    card.style.transform = `perspective(800px) rotateY(${gamma * 8}deg) rotateX(${beta * -5}deg) translateY(-3px)`;
-                }
-            });
+        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        function updateDisplay() {
+            viewSpan.textContent = views;
+            likeSpan.textContent = likes;
+            dislikeSpan.textContent = dislikes;
+            
+            if (userReaction === 'like') {
+                likeBtn.classList.add('liked');
+            } else if (userReaction === 'dislike') {
+                dislikeBtn.classList.add('liked');
+            }
+            
+            if (userNickname) {
+                currentNickSpan.textContent = `Ваш ник: ${userNickname}`;
+                nicknameInput.value = userNickname;
+                nicknameInput.disabled = true;
+                saveNickname.disabled = true;
+            }
+            
+            renderComments();
         }
 
-        // ========== ПРОСМОТРЫ ==========
-        function incrementView() {
+        // ========== ПРОСМОТРЫ (ТОЛЬКО 1 ЗА СЕССИЮ) ==========
+        if (!hasViewedThisSession) {
             views++;
-            viewSpan.textContent = views;
+            localStorage.setItem('views', views);
+            sessionStorage.setItem('hasViewed', 'true');
         }
-        
-        // Увеличиваем просмотры при загрузке
-        incrementView();
 
         // ========== РЕАКЦИИ ==========
         likeBtn.addEventListener('click', function() {
             if (userReaction === 'like') {
-                // Убираем лайк
                 likes--;
                 userReaction = null;
                 this.classList.remove('liked');
@@ -673,6 +676,10 @@
             
             likeSpan.textContent = likes;
             dislikeSpan.textContent = dislikes;
+            
+            localStorage.setItem('likes', likes);
+            localStorage.setItem('dislikes', dislikes);
+            localStorage.setItem('userReaction', userReaction);
         });
 
         dislikeBtn.addEventListener('click', function() {
@@ -692,43 +699,37 @@
             
             likeSpan.textContent = likes;
             dislikeSpan.textContent = dislikes;
+            
+            localStorage.setItem('likes', likes);
+            localStorage.setItem('dislikes', dislikes);
+            localStorage.setItem('userReaction', userReaction);
         });
 
-        // ========== КОТ МУРЛЫКАЕТ ==========
-        let isPurring = false;
-        
-        cat.addEventListener('click', function() {
-            if (isPurring) {
-                purrAudio.pause();
-                purrAudio.currentTime = 0;
-                isPurring = false;
-            } else {
-                // Воспроизводим звук
-                purrAudio.play()
-                    .then(() => {
-                        isPurring = true;
-                        // Останавливаем через 3 секунды
-                        setTimeout(() => {
-                            if (isPurring) {
-                                purrAudio.pause();
-                                purrAudio.currentTime = 0;
-                                isPurring = false;
-                            }
-                        }, 3000);
-                    })
-                    .catch(e => {
-                        console.log('Аудио не воспроизвелось:', e);
-                        alert('Нажми куда-нибудь ещё раз для звука (браузер блокирует)');
-                    });
+        // ========== ЗВУКИ (ПРИНУДИТЕЛЬНАЯ ЗАГРУЗКА) ==========
+        function playSound(type) {
+            const audio = new Audio();
+            if (type === 'cat') {
+                audio.src = 'https://www.soundjay.com/misc/sounds/cat-purring-1.mp3';
+            } else if (type === 'tea') {
+                audio.src = 'https://www.soundjay.com/misc/sounds/slurp-1.mp3';
             }
+            audio.volume = 0.5;
+            audio.play().catch(e => console.log('Звук не воспроизвёлся:', e));
+        }
+
+        // Кот
+        cat.addEventListener('click', function() {
+            playSound('cat');
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 200);
         });
 
-        // ========== ЧАЙ ==========
+        // Чай
         teaCup.addEventListener('click', function() {
             this.classList.add('drinking');
-            
-            // Звук чая
-            teaSound.play().catch(e => console.log('Звук чая не воспроизвёлся'));
+            playSound('tea');
             
             setTimeout(() => {
                 this.classList.remove('drinking');
@@ -736,16 +737,110 @@
         });
 
         // ========== КОММЕНТАРИИ ==========
+        function renderComments() {
+            commentsList.innerHTML = '';
+            
+            comments.forEach((comment, index) => {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.dataset.index = index;
+                
+                const isAuthor = comment.author === userNickname && userNickname;
+                
+                let actionsHtml = '';
+                if (isAuthor) {
+                    actionsHtml = `
+                        <div class="comment-actions">
+                            <button class="comment-btn edit-btn" data-index="${index}">✏️</button>
+                            <button class="comment-btn delete-btn" data-index="${index}">🗑️</button>
+                        </div>
+                    `;
+                }
+                
+                commentDiv.innerHTML = `
+                    <div class="comment-avatar">${comment.author[0]?.toUpperCase() || '?'}</div>
+                    <div class="comment-content">
+                        <div class="comment-author">${comment.author}</div>
+                        <div class="comment-text" id="comment-text-${index}">${comment.text}</div>
+                        <div class="comment-time">${comment.time}</div>
+                        ${actionsHtml}
+                    </div>
+                `;
+                
+                commentsList.appendChild(commentDiv);
+            });
+            
+            // Добавляем обработчики для кнопок редактирования/удаления
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const index = this.dataset.index;
+                    editComment(index);
+                });
+            });
+            
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const index = this.dataset.index;
+                    deleteComment(index);
+                });
+            });
+        }
+
+        function editComment(index) {
+            const comment = comments[index];
+            const textElement = document.getElementById(`comment-text-${index}`);
+            const oldText = comment.text;
+            
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = oldText;
+            input.className = 'edit-input';
+            input.maxLength = 100;
+            
+            textElement.innerHTML = '';
+            textElement.appendChild(input);
+            input.focus();
+            
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    saveEdit();
+                }
+            });
+            
+            input.addEventListener('blur', saveEdit);
+            
+            function saveEdit() {
+                const newText = input.value.trim();
+                if (newText && newText !== oldText) {
+                    comment.text = newText;
+                    comment.time = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+                    localStorage.setItem('comments', JSON.stringify(comments));
+                    renderComments();
+                } else {
+                    renderComments(); // Просто перерисовываем без изменений
+                }
+            }
+        }
+
+        function deleteComment(index) {
+            if (confirm('Удалить комментарий?')) {
+                comments.splice(index, 1);
+                localStorage.setItem('comments', JSON.stringify(comments));
+                renderComments();
+            }
+        }
+
         // Сохранение ника
         saveNickname.addEventListener('click', function() {
             const nick = nicknameInput.value.trim();
             if (nick) {
                 userNickname = nick;
                 currentNickSpan.textContent = `Ваш ник: ${userNickname}`;
-                toggleComments.disabled = false;
-                toggleComments.innerHTML = '<i class="fas fa-comments"></i> Показать комментарии';
                 nicknameInput.disabled = true;
                 this.disabled = true;
+                localStorage.setItem('userNickname', userNickname);
             }
         });
 
@@ -762,25 +857,23 @@
             const text = newCommentInput.value.trim();
             
             if (text && userNickname) {
-                const time = new Date();
-                const timeString = `${time.getHours()}:${String(time.getMinutes()).padStart(2, '0')}`;
+                const time = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
                 
-                const comment = document.createElement('div');
-                comment.className = 'comment';
-                comment.innerHTML = `
-                    <div class="comment-avatar">${userNickname[0].toUpperCase()}</div>
-                    <div class="comment-content">
-                        <div class="comment-author">${userNickname}</div>
-                        <div class="comment-text">${text}</div>
-                        <div class="comment-time">только что</div>
-                    </div>
-                `;
+                comments.push({
+                    author: userNickname,
+                    text: text,
+                    time: time
+                });
                 
-                commentsList.appendChild(comment);
+                localStorage.setItem('comments', JSON.stringify(comments));
+                
+                renderComments();
                 newCommentInput.value = '';
                 
                 // Скролл вниз
                 commentsList.scrollTop = commentsList.scrollHeight;
+            } else if (!userNickname) {
+                alert('Сначала введите никнейм');
             }
         });
 
@@ -791,25 +884,8 @@
             }
         });
 
-        // ========== ДОПОЛНИТЕЛЬНО: ПРОСМОТРЫ ПРИ ВЗАИМОДЕЙСТВИИ ==========
-        document.addEventListener('click', function() {
-            incrementView();
-        });
-
-        // Увеличиваем просмотры при скролле
-        window.addEventListener('scroll', function() {
-            incrementView();
-        });
-
-        // Увеличиваем просмотры при движении мыши (но не слишком часто)
-        let lastViewIncrement = 0;
-        document.addEventListener('mousemove', function() {
-            const now = Date.now();
-            if (now - lastViewIncrement > 5000) { // раз в 5 секунд
-                incrementView();
-                lastViewIncrement = now;
-            }
-        });
+        // Инициализация
+        updateDisplay();
     </script>
 </body>
 </html>
