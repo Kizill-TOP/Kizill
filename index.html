@@ -22,10 +22,10 @@
             position: relative;
             padding: 16px;
             overflow-x: hidden;
-            background: #f5e6b3;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
-        /* ФОН С КАРТИНКОЙ И ЖЁЛТЫМ ОТТЕНКОМ */
+        /* ФОН С КАРТИНКОЙ И ЦВЕТНЫМ ГРАДИЕНТОМ */
         body::before {
             content: "";
             position: fixed;
@@ -34,14 +34,14 @@
             width: 100%;
             height: 100%;
             background: url('https://i.imgur.com/YyvSlQA.jpeg') center/cover no-repeat fixed;
-            mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.25) 100%);
-            -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.25) 100%);
-            background-color: #ffd966;
+            mask-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+            -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 100%);
+            background-color: rgba(102, 126, 234, 0.3);
             background-blend-mode: overlay;
             z-index: -2;
-            opacity: 0.9;
         }
 
+        /* Цветной слой поверх */
         body::after {
             content: "";
             position: fixed;
@@ -49,9 +49,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(255, 230, 140, 0.4) 0%, rgba(255, 200, 50, 0.2) 100%);
+            background: radial-gradient(circle at 20% 50%, rgba(255, 182, 193, 0.3) 0%, rgba(147, 112, 219, 0.3) 50%, rgba(0, 255, 255, 0.2) 100%);
             pointer-events: none;
             z-index: -1;
+            mix-blend-mode: screen;
         }
 
         /* КОТ В УГЛУ */
@@ -75,7 +76,7 @@
             display: block;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            border: 4px solid #ffb347;
+            border: 4px solid #ff6b6b;
         }
         
         .cat-corner:active {
@@ -86,12 +87,12 @@
         .card {
             max-width: 400px;
             width: 100%;
-            background: rgba(255, 245, 210, 0.85);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(255, 240, 245, 0.85));
             backdrop-filter: blur(8px);
             border-radius: 42px 42px 32px 32px;
             padding: 28px 22px 32px;
-            box-shadow: 0 25px 35px rgba(0, 0, 0, 0.3), 0 0 0 4px #fff2c6, 0 0 0 10px rgba(255, 200, 70, 0.4);
-            border: 2px solid #ffd966;
+            box-shadow: 0 25px 35px rgba(0, 0, 0, 0.3), 0 0 0 4px #fff, 0 0 0 10px rgba(255, 107, 107, 0.3);
+            border: 2px solid #4ecdc4;
             text-align: center;
             animation: gentleRock 8s ease-in-out infinite;
             transform-origin: center;
@@ -107,18 +108,22 @@
 
         /* СЧЁТЧИК ПРОСМОТРОВ */
         .views-counter {
-            background: rgba(255, 240, 180, 0.95);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 50px;
-            padding: 5px 15px;
+            padding: 8px 20px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             margin-bottom: 15px;
-            border: 2px solid #ffaa33;
+            border: 3px solid #ffd93d;
             font-weight: bold;
-            color: #8b5a2b;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 0 #cc8b3a;
+            color: white;
+            font-size: 1rem;
+            box-shadow: 0 4px 0 #4a4a4a;
+        }
+
+        .views-counter i {
+            color: #ffd93d;
         }
 
         /* РЕАКЦИИ */
@@ -130,37 +135,38 @@
         }
 
         .reaction-btn {
-            background: #fff9e6;
+            background: linear-gradient(145deg, #ff6b6b, #ff8e8e);
             border: none;
             border-radius: 50px;
-            padding: 10px 25px;
+            padding: 12px 28px;
             font-size: 1.3rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 6px 0 #b37b48, 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 0 #c92a2a, 0 5px 15px rgba(0,0,0,0.2);
             transition: all 0.1s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
-            border: 2px solid #ffb347;
+            gap: 12px;
+            border: 2px solid #ffeaa7;
+            color: white;
         }
 
         .reaction-btn:active {
             transform: translateY(6px);
-            box-shadow: 0 2px 0 #b37b48;
+            box-shadow: 0 2px 0 #c92a2a;
         }
 
         .reaction-btn.liked {
-            background: #ffd966;
-            color: #5a3e1b;
-            border-color: #ff8c00;
+            background: linear-gradient(145deg, #4ecdc4, #45b7aa);
+            border-color: #ffeaa7;
         }
 
         .reaction-count {
-            font-size: 1.1rem;
-            color: #5a3e1b;
+            font-size: 1.2rem;
+            color: white;
             min-width: 30px;
             font-weight: 800;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
         }
 
         /* ЧАЙ */
@@ -213,13 +219,13 @@
         /* КОММЕНТАРИИ */
         .comments-section {
             margin-top: 20px;
-            border-top: 2px dashed #ffaa33;
+            border-top: 2px dashed #ff6b6b;
             padding-top: 15px;
         }
 
         .toggle-comments {
-            background: #ffaa33;
-            color: #3d2b0f;
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            color: #2d3436;
             border: none;
             border-radius: 50px;
             padding: 12px 20px;
@@ -230,7 +236,7 @@
             transition: all 0.1s ease;
             margin-bottom: 15px;
             width: 100%;
-            border: 2px solid #ffdd99;
+            border: 2px solid #ffeaa7;
         }
 
         .toggle-comments:active {
@@ -239,27 +245,27 @@
         }
 
         .nickname-setup {
-            background: rgba(255, 240, 190, 0.95);
+            background: linear-gradient(145deg, #a8e6cf, #d4edfa);
             border-radius: 20px;
             padding: 15px;
             margin-bottom: 15px;
-            border: 2px solid #ffaa33;
+            border: 2px solid #ff8b94;
         }
 
         .nickname-input {
             width: 100%;
             padding: 12px;
             border-radius: 30px;
-            border: 2px solid #ffaa33;
+            border: 2px solid #ff8b94;
             outline: none;
             font-size: 1rem;
             margin-bottom: 10px;
-            background: #fffef7;
+            background: #fff9e6;
         }
 
         .save-nickname {
-            background: #ffaa33;
-            color: #3d2b0f;
+            background: linear-gradient(135deg, #ff8b94, #ff6b6b);
+            color: white;
             border: none;
             border-radius: 30px;
             padding: 12px 20px;
@@ -267,24 +273,25 @@
             cursor: pointer;
             width: 100%;
             font-size: 1.1rem;
-            border: 2px solid #ffdd99;
+            border: 2px solid #ffeaa7;
         }
 
         .current-nick {
             margin-top: 10px;
             font-size: 1rem;
-            color: #8b5a2b;
+            color: #6c5ce7;
             font-weight: bold;
+            text-shadow: 1px 1px 0 #fff;
         }
 
         .comments-box {
-            background: rgba(255, 245, 215, 0.95);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
             padding: 0;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-out;
-            border: 2px solid #ffaa33;
+            border: 2px solid #ff8b94;
         }
 
         .comments-box.show {
@@ -305,24 +312,25 @@
             align-items: flex-start;
             gap: 10px;
             margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.7);
+            padding: 12px;
+            background: linear-gradient(145deg, #fff5e6, #ffe0f0);
             border-radius: 15px;
             position: relative;
+            border-left: 4px solid #ff6b6b;
         }
 
         .comment-avatar {
             width: 45px;
             height: 45px;
             border-radius: 50%;
-            background: #ffb347;
+            background: linear-gradient(135deg, #a8e6cf, #d4edfa);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            color: #3d2b0f;
+            color: #2d3436;
             font-size: 1.3rem;
-            border: 2px solid #ffdd99;
+            border: 2px solid #ff8b94;
         }
 
         .comment-content {
@@ -332,19 +340,19 @@
 
         .comment-author {
             font-weight: bold;
-            color: #8b4513;
+            color: #6c5ce7;
             font-size: 1rem;
         }
 
         .comment-text {
-            color: #4a3720;
+            color: #2d3436;
             font-size: 0.95rem;
             margin-top: 3px;
             word-break: break-word;
         }
 
         .comment-time {
-            color: #b37b48;
+            color: #b2bec3;
             font-size: 0.7rem;
             margin-top: 3px;
         }
@@ -358,26 +366,27 @@
         }
 
         .comment-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #ffaa33;
+            background: white;
+            border: 1px solid #ff8b94;
             border-radius: 15px;
             cursor: pointer;
             font-size: 0.8rem;
             padding: 3px 8px;
-            color: #8b5a2b;
+            color: #6c5ce7;
         }
 
         .comment-btn:active {
-            background: #ffaa33;
+            background: #ff8b94;
+            color: white;
         }
 
         .edit-input {
             width: 100%;
             padding: 8px;
             border-radius: 15px;
-            border: 2px solid #ffaa33;
+            border: 2px solid #ff8b94;
             margin-top: 5px;
-            background: #fffef7;
+            background: #fff9e6;
         }
 
         .add-comment {
@@ -390,20 +399,20 @@
             flex: 1;
             padding: 12px;
             border-radius: 30px;
-            border: 2px solid #ffaa33;
+            border: 2px solid #ff8b94;
             outline: none;
-            background: #fffef7;
+            background: #fff9e6;
         }
 
         .add-comment button {
-            background: #ffaa33;
-            color: #3d2b0f;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            color: white;
             border: none;
             border-radius: 30px;
-            padding: 12px 20px;
+            padding: 12px 25px;
             cursor: pointer;
             font-weight: bold;
-            border: 2px solid #ffdd99;
+            border: 2px solid #ffeaa7;
         }
 
         .add-comment button:active {
@@ -416,8 +425,8 @@
             height: 130px;
             border-radius: 50%;
             object-fit: cover;
-            border: 6px solid #ffd966;
-            box-shadow: 0 0 0 4px #ffb347, 0 18px 25px -8px #b16600;
+            border: 6px solid #ffd93d;
+            box-shadow: 0 0 0 4px #ff6b6b, 0 18px 25px -8px #000;
             transition: all 0.4s ease;
         }
 
@@ -428,8 +437,8 @@
         .nick {
             font-size: 2.7rem;
             font-weight: 800;
-            color: #5a3e1b;
-            text-shadow: 3px 3px 0 #ffd966, 5px 5px 0 rgba(255, 140, 0, 0.4);
+            color: #2d3436;
+            text-shadow: 3px 3px 0 #ffd93d, 5px 5px 0 #ff6b6b, 7px 7px 0 #4ecdc4;
             margin: 10px 0 15px;
             font-family: 'Impact', 'Arial Black', sans-serif;
             text-transform: uppercase;
@@ -437,72 +446,74 @@
         }
 
         .description {
-            background: #fff2b5;
+            background: linear-gradient(145deg, #ffeaa7, #fdcb6e);
             border-radius: 40px;
             padding: 16px 20px;
             margin: 20px 0 20px;
             font-size: 1.7rem;
             font-weight: 900;
-            border: 4px dashed #ffaa33;
-            color: #8b4513;
-            text-shadow: 2px 2px 0 #ffd966;
+            border: 4px dashed #ff6b6b;
+            color: #2d3436;
+            text-shadow: 2px 2px 0 #fff;
             box-shadow: 0 6px 0 #b37b48, inset 0 -2px 10px #ffffe0;
             font-family: 'Comic Sans MS', cursive, sans-serif;
         }
 
         .music-player {
-            background: rgba(255, 235, 180, 0.9);
+            background: linear-gradient(145deg, #74b9ff, #a29bfe);
             border-radius: 60px;
             padding: 12px 18px;
             margin: 15px 0 15px;
-            border: 2px solid #ffb347;
-            box-shadow: 0 7px 0 #b37b48;
+            border: 2px solid #ffeaa7;
+            box-shadow: 0 7px 0 #6c5ce7;
             display: flex;
             align-items: center;
             gap: 12px;
+            color: white;
         }
 
         .track-icon {
             font-size: 32px;
-            background: #fff2b5;
+            background: rgba(255,255,255,0.3);
             width: 52px;
             height: 52px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid #ffb347;
-            color: #b37b48;
+            border: 2px solid #ffeaa7;
+            color: #fff;
         }
 
         .track-name {
             font-size: 1.2rem;
-            color: #5a3e1b;
+            color: white;
             text-transform: uppercase;
             font-weight: bold;
+            text-shadow: 2px 2px 0 #6c5ce7;
         }
 
         audio {
             width: 100%;
             margin-top: 8px;
             border-radius: 40px;
-            border: 2px solid #ffb347;
-            box-shadow: 0 4px 0 #b37b48;
-            background: #fff2b5;
+            border: 2px solid #ff6b6b;
+            box-shadow: 0 4px 0 #c92a2a;
+            background: #ffeaa7;
         }
 
         .tg-link {
             display: inline-flex;
-            background: #ffaa33;
-            color: #3d2b0f;
+            background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+            color: white;
             font-size: 3rem;
             width: 85px;
             height: 85px;
             border-radius: 50%;
             align-items: center;
             justify-content: center;
-            border: 5px solid #ffdd99;
-            box-shadow: 0 8px 0 #b36b1e;
+            border: 5px solid #ffeaa7;
+            box-shadow: 0 8px 0 #0a4da4;
             transition: all 0.1s ease;
             margin: 15px 0 15px;
             text-decoration: none;
@@ -510,19 +521,20 @@
 
         .tg-link:active {
             transform: translateY(8px);
-            box-shadow: 0 2px 0 #b36b1e;
+            box-shadow: 0 2px 0 #0a4da4;
         }
 
         .year-note {
             font-size: 1.1rem;
-            color: #8b5a2b;
-            background: #fff2b5;
+            color: #2d3436;
+            background: linear-gradient(135deg, #fdcb6e, #ffeaa7);
             display: inline-block;
             padding: 6px 25px;
             border-radius: 50px;
-            border: 2px solid #ffaa33;
+            border: 2px solid #ff6b6b;
             margin-top: 15px;
             font-weight: bold;
+            box-shadow: 0 4px 0 #b37b48;
         }
 
         @media (max-width: 450px) {
@@ -580,7 +592,7 @@
             <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/OMFG/OMFG_-_Hello/OMFG_-_01_-_Hello.mp3" type="audio/mpeg">
             <source src="https://ia800708.us.archive.org/5/items/OMFGHello/OMFG%20-%20Hello.mp3" type="audio/mpeg">
         </audio>
-        <p style="font-size:0.75rem; margin:4px 0 0; color:#8b5a2b;">♫ OMFG – Hello</p>
+        <p style="font-size:0.75rem; margin:4px 0 0; color:#2d3436;">♫ OMFG – Hello</p>
 
         <!-- ЧАЙ -->
         <div class="tea-container" id="teaContainer">
