@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kizill_TOP · Лето 2016</title>
-    <!-- Иконка Telegram (Font Awesome для соц. иконки) -->
+    <!-- Иконка Telegram (Font Awesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         /* СБРОС И БАЗА */
@@ -20,33 +20,86 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f5e6d3; /* запасной тёплый цвет */
-            /* ЛЕТНИЙ ФОН 2016 — сочный градиент + ретро-текстура */
-            background: radial-gradient(circle at 20% 30%, #ffe99c, #ffd452), 
-                        repeating-linear-gradient(45deg, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 2px, 
-                                                                   rgba(255,215,100,0.2) 2px, rgba(255,215,100,0.2) 6px);
-            background-blend-mode: overlay;
+            position: relative;
             padding: 16px;
         }
 
-        /* ГЛАВНЫЙ БЛОК — в стиле старых профилей */
+        /* ФОН С ГРАДИЕНТНОЙ ПРОЗРАЧНОСТЬЮ (слева 0% -> справа 75%) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.imgur.com/YyvSlQA.jpeg') center/cover no-repeat fixed;
+            /* Градиент прозрачности: слева непрозрачный (0%), справа 75% прозрачность */
+            mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.25) 100%);
+            -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.25) 100%);
+            /* Добавляем небольшую затемненность для читаемости */
+            background-color: rgba(0, 0, 0, 0.1);
+            background-blend-mode: overlay;
+            z-index: -2;
+        }
+
+        /* Дополнительный слой для плавности перехода */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,240,0.2) 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ГЛАВНЫЙ БЛОК — с анимацией появления и легким свечением */
         .card {
             max-width: 480px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.65);
-            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
             border-radius: 42px 42px 32px 32px;
             padding: 32px 24px 36px;
-            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.25), 0 0 0 4px #fff9e6, 0 0 0 10px rgba(255, 220, 120, 0.3);
+            box-shadow: 0 30px 40px rgba(0, 0, 0, 0.3), 0 0 0 4px #fff9e6, 0 0 0 10px rgba(255, 220, 120, 0.4);
             border: 2px solid #fff6d5;
             text-align: center;
-            transition: all 0.2s ease;
+            animation: float 3s ease-in-out infinite, glowPulse 4s ease-in-out infinite;
+            transform-origin: center;
         }
 
-        /* АВА — в духе 2016: круглая с блюром и яркой обводкой */
+        /* АНИМАЦИИ */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(0.5deg); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 30px 40px rgba(0, 0, 0, 0.3), 0 0 0 4px #fff9e6, 0 0 0 10px rgba(255, 220, 120, 0.4); }
+            50% { box-shadow: 0 35px 50px rgba(255, 200, 0, 0.4), 0 0 0 6px #fff9e6, 0 0 0 15px rgba(255, 200, 100, 0.6); }
+        }
+
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* АВА — с мягкой анимацией вращения при наведении */
         .avatar-wrapper {
             margin-bottom: 12px;
             filter: drop-shadow(0 8px 12px rgba(255, 180, 40, 0.6));
+            transition: all 0.3s ease;
+        }
+
+        .avatar-wrapper:hover {
+            filter: drop-shadow(0 12px 20px rgba(255, 140, 0, 0.8));
         }
 
         .avatar {
@@ -56,26 +109,41 @@
             object-fit: cover;
             border: 6px solid #ffecb3;
             box-shadow: 0 0 0 4px #ffbb2b, 0 18px 24px -8px #b16600;
-            background: #fff0c0; /* на случай если картинка не загрузится */
+            background: #fff0c0;
+            transition: all 0.5s ease;
+            animation: glowPulse 5s ease-in-out infinite;
         }
 
-        /* НИК — шрифт с намёком на старый Vine/Instagram */
+        .avatar:hover {
+            transform: rotate(360deg) scale(1.1);
+            border-color: #ffaa33;
+            box-shadow: 0 0 30px #ffaa33;
+        }
+
+        /* НИК — с анимацией текста */
         .nick {
             font-size: 3rem;
             font-weight: 800;
             letter-spacing: 2px;
             color: #3b2a0f;
-            text-shadow: 4px 4px 0 #ffc964, 6px 6px 0 rgba(255, 140, 0, 0.3);
+            text-shadow: 4px 4px 0 #ffc964, 6px 6px 0 rgba(255, 140, 0, 0.3), 0 0 20px #ffaa33;
             margin-top: 8px;
             margin-bottom: 16px;
             word-break: break-word;
             font-family: 'Impact', 'Arial Black', 'Segoe UI', sans-serif;
             text-transform: uppercase;
+            animation: bounce 2s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .nick:hover {
+            text-shadow: 6px 6px 0 #ffaa33, 8px 8px 0 #ff7700, 0 0 30px #ff5500;
+            letter-spacing: 4px;
         }
 
         /* ПЛЕЕР СТИЛЬ 2016 */
         .music-player {
-            background: rgba(255, 245, 215, 0.8);
+            background: rgba(255, 245, 215, 0.85);
             backdrop-filter: blur(4px);
             border-radius: 80px;
             padding: 12px 18px;
@@ -86,6 +154,13 @@
             align-items: center;
             gap: 12px;
             color: #3b2f1c;
+            transition: all 0.3s ease;
+            animation: glowPulse 6s ease-in-out infinite;
+        }
+
+        .music-player:hover {
+            transform: scale(1.02);
+            box-shadow: inset 0 2px 5px #fff8, 0 10px 0 #bd8b3a, 0 15px 25px #c9933e;
         }
 
         .track-icon {
@@ -99,6 +174,7 @@
             justify-content: center;
             border: 2px solid #ffb457;
             color: #9b5e1c;
+            animation: spinSlow 10s linear infinite;
         }
 
         .track-info {
@@ -120,7 +196,7 @@
             opacity: 0.8;
         }
 
-        /* кастомный аудиоплеер (минимализм) */
+        /* кастомный аудиоплеер */
         audio {
             width: 100%;
             margin-top: 8px;
@@ -128,9 +204,15 @@
             background: #ffedd1;
             border: 2px solid #ffb152;
             box-shadow: 0 4px 0 #925f22;
+            transition: all 0.3s ease;
         }
 
-        /* описание с «прочитал = кака» */
+        audio:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 0 #925f22, 0 0 20px #ffaa33;
+        }
+
+        /* описание */
         .description {
             background: #fffcdb;
             border-radius: 40px;
@@ -145,10 +227,18 @@
             box-shadow: 0 5px 0 #b57a2a, inset 0 -2px 10px #fffdc6;
             word-break: break-word;
             transform: rotate(-0.5deg);
-            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif; /* налёт 2016 */
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive, sans-serif;
+            animation: bounce 3s ease-in-out infinite;
+            transition: all 0.3s ease;
         }
 
-        /* иконка телеграма кликабельная */
+        .description:hover {
+            transform: rotate(0deg) scale(1.02);
+            background: #fffff0;
+            box-shadow: 0 8px 0 #b57a2a, inset 0 -2px 10px #fffdc6, 0 0 30px #ffaa33;
+        }
+
+        /* иконка телеграма */
         .tg-link {
             display: inline-block;
             background: #32a8de;
@@ -163,22 +253,25 @@
             justify-content: center;
             border: 5px solid #ffe69b;
             box-shadow: 0 10px 0 #146b9e, 0 12px 18px #0000002e;
-            transition: all 0.06s linear;
+            transition: all 0.1s ease;
             margin: 8px 0 10px;
             text-decoration: none;
+            animation: bounce 3s ease-in-out infinite;
+            animation-delay: 0.5s;
         }
 
         .tg-link:hover {
-            transform: translateY(6px);
-            box-shadow: 0 4px 0 #146b9e, 0 12px 18px #0000002e;
+            transform: translateY(6px) scale(1.1);
+            box-shadow: 0 4px 0 #146b9e, 0 12px 18px #0000002e, 0 0 30px #32a8de;
+            background: #3cb9f0;
         }
 
         .tg-link:active {
-            transform: translateY(10px);
+            transform: translateY(10px) scale(1.05);
             box-shadow: 0 1px 0 #146b9e, 0 8px 12px #0000002e;
         }
 
-        /* маленький футер для атмосферы */
+        /* год */
         .year-note {
             font-size: 1.1rem;
             color: #9b6d34;
@@ -189,6 +282,14 @@
             border: 1px solid #ffc107;
             font-style: italic;
             margin-top: 16px;
+            transition: all 0.3s ease;
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        .year-note:hover {
+            background: #ffe98c;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #ffaa33;
         }
 
         /* адаптация */
@@ -200,12 +301,11 @@
 </head>
 <body>
     <div class="card">
-        <!-- Аватарка (заглушка с красивой летней картинкой, вы можете заменить ссылку на свою) -->
+        <!-- Ваша аватарка -->
         <div class="avatar-wrapper">
             <img class="avatar" 
-                 src="https://i.pinimg.com/736x/5c/8a/11/5c8a11a20d8b7ebf7c8e951d08b594b1.jpg" 
-                 alt="Kizill_TOP avatar" 
-                 onerror="this.src='https://via.placeholder.com/140/ffcc66/663d00?text=K'">
+                 src="https://i.imgur.com/frGapU3.jpeg" 
+                 alt="Kizill_TOP avatar">
         </div>
 
         <!-- Никнейм -->
@@ -222,16 +322,15 @@
             </div>
         </div>
         
-        <!-- Аудиоплеер (HELLO) – файл с archive.org или фалловый репозиторий. Вставлена рабочая ссылка на mp3 (hello) -->
+        <!-- Аудиоплеер -->
         <audio controls loop>
             <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/OMFG/OMFG_-_Hello/OMFG_-_01_-_Hello.mp3" type="audio/mpeg">
-            <!-- Резервный вариант если первый не грузится (зеркало с другого источника) -->
             <source src="https://ia800708.us.archive.org/5/items/OMFGHello/OMFG%20-%20Hello.mp3" type="audio/mpeg">
             Ваш браузер не поддерживает аудио.
         </audio>
         <p style="font-size:0.8rem; margin:4px 0 0; color:#ab7e42;">♫ OMFG – Hello (щепотка 2016)</p>
 
-        <!-- Описание с легендарной фразой -->
+        <!-- Описание -->
         <div class="description">
             Прочитал = К@k@
         </div>
@@ -246,8 +345,5 @@
             ✦ лето 2016 ✦
         </div>
     </div>
-
-    <!-- Фон дополнительно украсим точечками (ради прикола) -->
-    <div style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; background: radial-gradient(circle at 70% 30%, rgba(255,235,140,0.4) 0%, transparent 40%), radial-gradient(circle at 20% 80%, #ffe89e 0%, transparent 40%); mix-blend-mode:multiply;"></div>
 </body>
 </html>
