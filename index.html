@@ -643,7 +643,7 @@
         let views = 0;
         let likes = 0;
         let dislikes = 0;
-        let userReaction = null;
+        let userReaction = null; // 'like', 'dislike' или null
         let userNickname = '';
         let comments = [];
 
@@ -731,8 +731,13 @@
             userReaction = localStorage.getItem('userReaction') || null;
             if (userReaction === 'like') {
                 likeBtn.classList.add('liked');
+                dislikeBtn.classList.remove('liked');
             } else if (userReaction === 'dislike') {
                 dislikeBtn.classList.add('liked');
+                likeBtn.classList.remove('liked');
+            } else {
+                likeBtn.classList.remove('liked');
+                dislikeBtn.classList.remove('liked');
             }
             
             // Никнейм из localStorage
@@ -747,17 +752,24 @@
             renderComments();
         }
 
-        // ========== РЕАКЦИИ ==========
+        // ========== РЕАКЦИИ (ИСПРАВЛЕНО) ==========
         likeBtn.addEventListener('click', async function() {
+            // Если уже лайкнул - убираем лайк
             if (userReaction === 'like') {
-                likes--;
+                likes = Math.max(0, likes - 1);
                 userReaction = null;
                 this.classList.remove('liked');
-            } else {
-                if (userReaction === 'dislike') {
-                    dislikes--;
-                    dislikeBtn.classList.remove('liked');
-                }
+            } 
+            // Если дизлайкнул - убираем дизлайк и ставим лайк
+            else if (userReaction === 'dislike') {
+                dislikes = Math.max(0, dislikes - 1);
+                likes++;
+                userReaction = 'like';
+                this.classList.add('liked');
+                dislikeBtn.classList.remove('liked');
+            }
+            // Если нет реакции - ставим лайк
+            else {
                 likes++;
                 userReaction = 'like';
                 this.classList.add('liked');
@@ -771,15 +783,22 @@
         });
 
         dislikeBtn.addEventListener('click', async function() {
+            // Если уже дизлайкнул - убираем дизлайк
             if (userReaction === 'dislike') {
-                dislikes--;
+                dislikes = Math.max(0, dislikes - 1);
                 userReaction = null;
                 this.classList.remove('liked');
-            } else {
-                if (userReaction === 'like') {
-                    likes--;
-                    likeBtn.classList.remove('liked');
-                }
+            } 
+            // Если лайкнул - убираем лайк и ставим дизлайк
+            else if (userReaction === 'like') {
+                likes = Math.max(0, likes - 1);
+                dislikes++;
+                userReaction = 'dislike';
+                this.classList.add('liked');
+                likeBtn.classList.remove('liked');
+            }
+            // Если нет реакции - ставим дизлайк
+            else {
                 dislikes++;
                 userReaction = 'dislike';
                 this.classList.add('liked');
