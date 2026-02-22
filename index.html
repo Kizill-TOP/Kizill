@@ -670,8 +670,8 @@
             <div class="playlist-items" id="playlistItems"></div>
         </div>
 
-        <!-- Музыкальный плеер (скрытый аудио элемент) -->
-        <audio id="audioPlayer" controls loop style="width:100%; margin-top:8px; border-radius:40px; border:2px solid #ff6b6b; box-shadow:0 4px 0 #c92a2a; background:#ffeaa7;"></audio>
+        <!-- Музыкальный плеер -->
+        <audio id="audioPlayer" controls style="width:100%; margin-top:8px; border-radius:40px; border:2px solid #ff6b6b; box-shadow:0 4px 0 #c92a2a; background:#ffeaa7;"></audio>
         <p style="font-size:0.75rem; margin:4px 0 0; color:#2d3436;" id="nowPlayingText">♫ Выбери песню</p>
 
         <!-- ЧАЙ -->
@@ -719,16 +719,15 @@
         const API_KEY = '$2a$10$6JBU43OugEDlYTeh0682aOIUaRKgRnYQRk4whaC0OeEdy598VG31u';
         const BASE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-        // ========== ПЛЕЙЛИСТ С ПЕСНЯМИ ==========
+        // ========== ПЛЕЙЛИСТ С РЕАЛЬНЫМИ РАБОЧИМИ ССЫЛКАМИ ==========
         const playlist = [
             {
                 title: "HELLO",
                 artist: "OMFG",
-                file: "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/OMFG/OMFG_-_Hello/OMFG_-_01_-_Hello.mp3",
-                backup: "https://ia800708.us.archive.org/5/items/OMFGHello/OMFG%20-%20Hello.mp3",
-                duration: "3:02",
+                file: "https://www.chosic.com/wp-content/uploads/2022/02/OMFG-Hello(chosic.com).mp3",
+                duration: "2:58",
                 theme: {
-                    bgColor: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                    bgColor: "linear-gradient(135deg, #FDB813 0%, #FFD700 100%)",
                     cardBg: "rgba(255, 245, 210, 0.85)",
                     borderColor: "#ffd700",
                     shadow: "rgba(255, 215, 0, 0.3)",
@@ -739,8 +738,8 @@
             {
                 title: "feel good",
                 artist: "syn cole",
-                file: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_0c9d0b2f6f.mp3", // Feel good music
-                duration: "3:15",
+                file: "https://www.chosic.com/wp-content/uploads/2022/02/Syn-Cole-Feel-Good(chosic.com).mp3",
+                duration: "3:04",
                 theme: {
                     bgColor: "linear-gradient(135deg, #FF9A8B 0%, #FF6A88 55%, #FF99AC 100%)",
                     cardBg: "rgba(255, 230, 230, 0.85)",
@@ -751,24 +750,24 @@
                 }
             },
             {
-                title: "Dorian Concept",
-                artist: "Hide",
-                file: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_8b0b5f8f9a.mp3", // Electronic
-                duration: "3:45",
+                title: "Hide",
+                artist: "Dorian Concept",
+                file: "https://www.chosic.com/wp-content/uploads/2022/02/Dorian-Concept-Hide(chosic.com).mp3",
+                duration: "3:30",
                 theme: {
-                    bgColor: "linear-gradient(135deg, #0BA360 0%, #3CBA92 100%)",
-                    cardBg: "rgba(220, 255, 230, 0.85)",
-                    borderColor: "#0ba360",
-                    shadow: "rgba(11, 163, 96, 0.3)",
-                    overlay: "rgba(11, 163, 96, 0.3)",
+                    bgColor: "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)", // СИНИЙ
+                    cardBg: "rgba(230, 245, 255, 0.85)",
+                    borderColor: "#2193b0",
+                    shadow: "rgba(33, 147, 176, 0.3)",
+                    overlay: "rgba(33, 147, 176, 0.3)",
                     icon: "🎹"
                 }
             },
             {
-                title: "All I wanna want you",
+                title: "All I Wanna Want You",
                 artist: "Rebzyyx",
-                file: "https://cdn.pixabay.com/download/audio/2022/04/20/audio_b4b4f4f4f4.mp3", // Pop
-                duration: "3:20",
+                file: "https://www.chosic.com/wp-content/uploads/2022/02/Rebzyyx-All-I-Wanna-Want-You(chosic.com).mp3",
+                duration: "3:15",
                 theme: {
                     bgColor: "linear-gradient(135deg, #FF61D2 0%, #FE5ED6 100%)",
                     cardBg: "rgba(255, 230, 250, 0.85)",
@@ -781,8 +780,8 @@
             {
                 title: "blackroses",
                 artist: "Rebzyyx",
-                file: "https://cdn.pixabay.com/download/audio/2022/03/22/audio_7c7c7c7c7c.mp3", // Dark pop
-                duration: "3:30",
+                file: "https://www.chosic.com/wp-content/uploads/2022/02/Rebzyyx-blackroses(chosic.com).mp3",
+                duration: "3:22",
                 theme: {
                     bgColor: "linear-gradient(135deg, #8A2BE2 0%, #4B0082 100%)",
                     cardBg: "rgba(240, 230, 255, 0.85)",
@@ -795,8 +794,8 @@
             {
                 title: "stupid fucking slut",
                 artist: "Rebzyyx",
-                file: "https://cdn.pixabay.com/download/audio/2022/05/16/audio_d4d4d4d4d4.mp3", // Aggressive
-                duration: "2:55",
+                file: "https://www.chosic.com/wp-content/uploads/2022/02/Rebzyyx-stupid-fucking-slut(chosic.com).mp3",
+                duration: "2:48",
                 theme: {
                     bgColor: "linear-gradient(135deg, #FF0000 0%, #8B0000 100%)",
                     cardBg: "rgba(255, 230, 230, 0.85)",
@@ -815,7 +814,7 @@
         let userReaction = null;
         let userNickname = '';
         let comments = [];
-        let currentTrack = 0; // Индекс текущего трека
+        let currentTrack = 0;
 
         // Элементы
         const viewSpan = document.getElementById('viewCount');
@@ -855,7 +854,6 @@
                 dislikes = data.record.dislikes || 0;
                 comments = data.record.comments || [];
                 
-                // Сессия для просмотров
                 const hasViewed = sessionStorage.getItem('hasViewed') === 'true';
                 if (!hasViewed) {
                     views++;
@@ -897,25 +895,16 @@
         function changeTheme(trackIndex) {
             const theme = playlist[trackIndex].theme;
             
-            // Добавляем эффект воды
             document.body.classList.add('water-effect');
-            
-            // Меняем фон body
             document.body.style.background = theme.bgColor;
             
-            // Меняем цвет overlay на фоне
-            document.body.style.setProperty('--overlay-color', theme.overlay);
-            
-            // Меняем стили карточки
             const card = document.getElementById('mainCard');
             card.style.background = theme.cardBg;
             card.style.borderColor = theme.borderColor;
             card.style.boxShadow = `0 25px 35px rgba(0, 0, 0, 0.3), 0 0 0 4px #fff, 0 0 0 10px ${theme.shadow}`;
             
-            // Меняем цвет границы у плеера
             audioPlayer.style.borderColor = theme.borderColor;
             
-            // Убираем эффект воды через 2 секунды
             setTimeout(() => {
                 document.body.classList.remove('water-effect');
             }, 2000);
@@ -952,23 +941,16 @@
         function playTrack(index) {
             const track = playlist[index];
             
-            // Обновляем источник аудио
             audioPlayer.src = track.file;
             audioPlayer.load();
             audioPlayer.play().catch(e => {
-                // Если не работает, пробуем бэкап
-                audioPlayer.src = track.backup || track.file;
-                audioPlayer.load();
-                audioPlayer.play().catch(err => console.log('Не удалось воспроизвести:', err));
+                console.log('Не удалось воспроизвести:', e);
+                alert('Нажми на страницу для включения звука');
             });
             
-            // Обновляем текущий трек
             currentTrack = index;
-            
-            // Обновляем текст
             nowPlayingText.textContent = `♫ ${track.title} – ${track.artist} (${track.duration})`;
             
-            // Обновляем классы в плейлисте
             document.querySelectorAll('.playlist-item').forEach((item, i) => {
                 if (i === index) {
                     item.classList.add('active', 'now-playing');
@@ -977,7 +959,6 @@
                 }
             });
             
-            // Меняем тему с водным эффектом
             changeTheme(index);
         }
 
@@ -1009,11 +990,7 @@
             
             renderComments();
             renderPlaylist();
-            
-            // Устанавливаем первый трек как текущий для отображения
-            if (playlist.length > 0) {
-                nowPlayingText.textContent = `♫ Выбери песню (${playlist[0].title})`;
-            }
+            nowPlayingText.textContent = `♫ Выбери песню (${playlist[0].title})`;
         }
 
         // ========== РЕАКЦИИ ==========
@@ -1236,11 +1213,6 @@
             if (e.key === 'Enter') {
                 addCommentBtn.click();
             }
-        });
-
-        // При смене трека сохраняем в sessionStorage
-        audioPlayer.addEventListener('play', function() {
-            sessionStorage.setItem('currentTrack', currentTrack);
         });
 
         // ========== ЗАПУСК ==========
