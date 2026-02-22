@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Kizill_TOP · Лето 2016</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -10,7 +10,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -23,10 +22,10 @@
             position: relative;
             padding: 16px;
             overflow-x: hidden;
-            background: #000;
+            background: #f5e6b3;
         }
 
-        /* ФОН С ГРАДИЕНТНОЙ ПРОЗРАЧНОСТЬЮ */
+        /* ФОН С КАРТИНКОЙ И ЖЁЛТЫМ ОТТЕНКОМ */
         body::before {
             content: "";
             position: fixed;
@@ -37,9 +36,10 @@
             background: url('https://i.imgur.com/YyvSlQA.jpeg') center/cover no-repeat fixed;
             mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.25) 100%);
             -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,0.25) 100%);
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: #ffd966;
             background-blend-mode: overlay;
             z-index: -2;
+            opacity: 0.9;
         }
 
         body::after {
@@ -49,7 +49,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,240,0.2) 100%);
+            background: linear-gradient(135deg, rgba(255, 230, 140, 0.4) 0%, rgba(255, 200, 50, 0.2) 100%);
             pointer-events: none;
             z-index: -1;
         }
@@ -66,6 +66,7 @@
             transition: transform 0.3s ease;
             cursor: pointer;
             pointer-events: auto;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
         }
         
         .cat-corner img {
@@ -74,7 +75,7 @@
             display: block;
             border-radius: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            border: 3px solid #ffd700;
+            border: 4px solid #ffb347;
         }
         
         .cat-corner:active {
@@ -85,76 +86,81 @@
         .card {
             max-width: 400px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.75);
+            background: rgba(255, 245, 210, 0.85);
             backdrop-filter: blur(8px);
             border-radius: 42px 42px 32px 32px;
             padding: 28px 22px 32px;
-            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25), 0 0 0 4px #fff9e6, 0 0 0 8px rgba(255, 220, 120, 0.3);
-            border: 2px solid #fff6d5;
+            box-shadow: 0 25px 35px rgba(0, 0, 0, 0.3), 0 0 0 4px #fff2c6, 0 0 0 10px rgba(255, 200, 70, 0.4);
+            border: 2px solid #ffd966;
             text-align: center;
-            animation: breathe 4s ease-in-out infinite;
+            animation: gentleRock 8s ease-in-out infinite;
+            transform-origin: center;
             position: relative;
             z-index: 1;
         }
 
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+        @keyframes gentleRock {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(0.8deg) scale(1.01); }
+            75% { transform: rotate(-0.8deg) scale(1.01); }
         }
 
         /* СЧЁТЧИК ПРОСМОТРОВ */
         .views-counter {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 240, 180, 0.95);
             border-radius: 50px;
-            padding: 5px 12px;
+            padding: 5px 15px;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             margin-bottom: 15px;
-            border: 2px solid #ffd700;
+            border: 2px solid #ffaa33;
             font-weight: bold;
-            color: #6441a4;
-            font-size: 0.9rem;
+            color: #8b5a2b;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 0 #cc8b3a;
         }
 
         /* РЕАКЦИИ */
         .reactions {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
             margin: 15px 0;
         }
 
         .reaction-btn {
-            background: white;
+            background: #fff9e6;
             border: none;
             border-radius: 50px;
-            padding: 10px 20px;
-            font-size: 1.2rem;
+            padding: 10px 25px;
+            font-size: 1.3rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 5px 0 #b37b48, 0 3px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 0 #b37b48, 0 5px 15px rgba(0,0,0,0.2);
             transition: all 0.1s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
-            border: 2px solid #ffd700;
+            gap: 10px;
+            border: 2px solid #ffb347;
         }
 
         .reaction-btn:active {
-            transform: translateY(5px);
+            transform: translateY(6px);
             box-shadow: 0 2px 0 #b37b48;
         }
 
         .reaction-btn.liked {
-            background: #ffd700;
-            color: #333;
+            background: #ffd966;
+            color: #5a3e1b;
+            border-color: #ff8c00;
         }
 
         .reaction-count {
-            font-size: 1rem;
-            color: #666;
-            min-width: 25px;
+            font-size: 1.1rem;
+            color: #5a3e1b;
+            min-width: 30px;
+            font-weight: 800;
         }
 
         /* ЧАЙ */
@@ -168,7 +174,7 @@
             font-size: 4rem;
             transition: all 0.3s ease;
             display: inline-block;
-            filter: drop-shadow(0 10px 5px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 12px 8px rgba(0,0,0,0.25));
         }
 
         .tea-cup.drinking {
@@ -207,74 +213,78 @@
         /* КОММЕНТАРИИ */
         .comments-section {
             margin-top: 20px;
-            border-top: 2px dashed #ffae3c;
+            border-top: 2px dashed #ffaa33;
             padding-top: 15px;
         }
 
         .toggle-comments {
-            background: #4caf50;
-            color: white;
+            background: #ffaa33;
+            color: #3d2b0f;
             border: none;
             border-radius: 50px;
-            padding: 10px 20px;
-            font-size: 1rem;
+            padding: 12px 20px;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 5px 0 #2e7d32;
+            box-shadow: 0 6px 0 #b36b1e;
             transition: all 0.1s ease;
             margin-bottom: 15px;
             width: 100%;
+            border: 2px solid #ffdd99;
         }
 
         .toggle-comments:active {
-            transform: translateY(5px);
-            box-shadow: 0 2px 0 #2e7d32;
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #b36b1e;
         }
 
-        /* Никнейм для комментариев */
         .nickname-setup {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 240, 190, 0.95);
             border-radius: 20px;
             padding: 15px;
             margin-bottom: 15px;
-            border: 2px solid #ffae3c;
+            border: 2px solid #ffaa33;
         }
 
         .nickname-input {
             width: 100%;
-            padding: 10px;
-            border-radius: 20px;
-            border: 2px solid #ffae3c;
+            padding: 12px;
+            border-radius: 30px;
+            border: 2px solid #ffaa33;
             outline: none;
             font-size: 1rem;
             margin-bottom: 10px;
+            background: #fffef7;
         }
 
         .save-nickname {
-            background: #ffae3c;
-            color: white;
+            background: #ffaa33;
+            color: #3d2b0f;
             border: none;
-            border-radius: 20px;
-            padding: 10px 20px;
+            border-radius: 30px;
+            padding: 12px 20px;
             font-weight: bold;
             cursor: pointer;
             width: 100%;
+            font-size: 1.1rem;
+            border: 2px solid #ffdd99;
         }
 
         .current-nick {
             margin-top: 10px;
-            font-size: 0.9rem;
-            color: #6441a4;
+            font-size: 1rem;
+            color: #8b5a2b;
+            font-weight: bold;
         }
 
         .comments-box {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 245, 215, 0.95);
             border-radius: 20px;
             padding: 0;
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-out;
-            border: 2px solid #ffae3c;
+            border: 2px solid #ffaa33;
         }
 
         .comments-box.show {
@@ -287,6 +297,7 @@
             max-height: 250px;
             overflow-y: auto;
             margin-bottom: 15px;
+            padding-right: 5px;
         }
 
         .comment {
@@ -294,22 +305,24 @@
             align-items: flex-start;
             gap: 10px;
             margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
             position: relative;
         }
 
         .comment-avatar {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
-            background: #ffd700;
+            background: #ffb347;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            color: #333;
-            font-size: 1.2rem;
+            color: #3d2b0f;
+            font-size: 1.3rem;
+            border: 2px solid #ffdd99;
         }
 
         .comment-content {
@@ -319,74 +332,78 @@
 
         .comment-author {
             font-weight: bold;
-            color: #6441a4;
-            font-size: 0.9rem;
+            color: #8b4513;
+            font-size: 1rem;
         }
 
         .comment-text {
-            color: #333;
-            font-size: 0.9rem;
-            margin-top: 2px;
+            color: #4a3720;
+            font-size: 0.95rem;
+            margin-top: 3px;
             word-break: break-word;
         }
 
         .comment-time {
-            color: #999;
+            color: #b37b48;
             font-size: 0.7rem;
-            margin-top: 2px;
+            margin-top: 3px;
         }
 
         .comment-actions {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: 5px;
+            right: 5px;
             display: flex;
             gap: 5px;
         }
 
         .comment-btn {
-            background: none;
-            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ffaa33;
+            border-radius: 15px;
             cursor: pointer;
             font-size: 0.8rem;
-            color: #666;
-            padding: 2px 5px;
+            padding: 3px 8px;
+            color: #8b5a2b;
         }
 
-        .comment-btn:hover {
-            color: #333;
+        .comment-btn:active {
+            background: #ffaa33;
         }
 
         .edit-input {
             width: 100%;
-            padding: 5px;
-            border-radius: 10px;
-            border: 2px solid #ffae3c;
+            padding: 8px;
+            border-radius: 15px;
+            border: 2px solid #ffaa33;
             margin-top: 5px;
+            background: #fffef7;
         }
 
         .add-comment {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .add-comment input {
             flex: 1;
-            padding: 8px;
-            border-radius: 20px;
-            border: 2px solid #ffae3c;
+            padding: 12px;
+            border-radius: 30px;
+            border: 2px solid #ffaa33;
             outline: none;
+            background: #fffef7;
         }
 
         .add-comment button {
-            background: #ffae3c;
-            color: white;
+            background: #ffaa33;
+            color: #3d2b0f;
             border: none;
-            border-radius: 20px;
-            padding: 8px 15px;
+            border-radius: 30px;
+            padding: 12px 20px;
             cursor: pointer;
             font-weight: bold;
+            border: 2px solid #ffdd99;
         }
 
         .add-comment button:active {
@@ -395,12 +412,12 @@
 
         /* Аватарка */
         .avatar {
-            width: 120px;
-            height: 120px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid #ffecb3;
-            box-shadow: 0 0 0 3px #ffbb2b, 0 15px 20px -8px #b16600;
+            border: 6px solid #ffd966;
+            box-shadow: 0 0 0 4px #ffb347, 0 18px 25px -8px #b16600;
             transition: all 0.4s ease;
         }
 
@@ -409,104 +426,109 @@
         }
 
         .nick {
-            font-size: 2.5rem;
+            font-size: 2.7rem;
             font-weight: 800;
-            color: #3b2a0f;
-            text-shadow: 3px 3px 0 #ffc964, 5px 5px 0 rgba(255, 140, 0, 0.3);
-            margin: 5px 0 12px;
+            color: #5a3e1b;
+            text-shadow: 3px 3px 0 #ffd966, 5px 5px 0 rgba(255, 140, 0, 0.4);
+            margin: 10px 0 15px;
             font-family: 'Impact', 'Arial Black', sans-serif;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .description {
-            background: #fffcdb;
+            background: #fff2b5;
             border-radius: 40px;
-            padding: 14px 18px;
-            margin: 18px 0 20px;
-            font-size: 1.5rem;
+            padding: 16px 20px;
+            margin: 20px 0 20px;
+            font-size: 1.7rem;
             font-weight: 900;
-            border: 3px dashed #ffae3c;
-            color: #6a3f00;
-            text-shadow: 2px 2px 0 #ffbe6e;
-            box-shadow: 0 4px 0 #b57a2a;
+            border: 4px dashed #ffaa33;
+            color: #8b4513;
+            text-shadow: 2px 2px 0 #ffd966;
+            box-shadow: 0 6px 0 #b37b48, inset 0 -2px 10px #ffffe0;
             font-family: 'Comic Sans MS', cursive, sans-serif;
         }
 
         .music-player {
-            background: rgba(255, 245, 215, 0.85);
+            background: rgba(255, 235, 180, 0.9);
             border-radius: 60px;
-            padding: 10px 16px;
-            margin: 14px 0 16px;
-            border: 2px solid #ffd78c;
-            box-shadow: 0 6px 0 #bd8b3a;
+            padding: 12px 18px;
+            margin: 15px 0 15px;
+            border: 2px solid #ffb347;
+            box-shadow: 0 7px 0 #b37b48;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .track-icon {
-            font-size: 30px;
+            font-size: 32px;
             background: #fff2b5;
-            width: 48px;
-            height: 48px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid #ffb457;
+            border: 2px solid #ffb347;
+            color: #b37b48;
         }
 
         .track-name {
-            font-size: 1.1rem;
-            color: #33200b;
+            font-size: 1.2rem;
+            color: #5a3e1b;
             text-transform: uppercase;
+            font-weight: bold;
         }
 
         audio {
             width: 100%;
-            margin-top: 6px;
-            border-radius: 30px;
-            border: 2px solid #ffb152;
-            box-shadow: 0 3px 0 #925f22;
+            margin-top: 8px;
+            border-radius: 40px;
+            border: 2px solid #ffb347;
+            box-shadow: 0 4px 0 #b37b48;
+            background: #fff2b5;
         }
 
         .tg-link {
             display: inline-flex;
-            background: #32a8de;
-            color: white;
-            font-size: 2.8rem;
-            width: 75px;
-            height: 75px;
+            background: #ffaa33;
+            color: #3d2b0f;
+            font-size: 3rem;
+            width: 85px;
+            height: 85px;
             border-radius: 50%;
             align-items: center;
             justify-content: center;
-            border: 4px solid #ffe69b;
-            box-shadow: 0 7px 0 #146b9e;
+            border: 5px solid #ffdd99;
+            box-shadow: 0 8px 0 #b36b1e;
             transition: all 0.1s ease;
-            margin: 8px 0 10px;
+            margin: 15px 0 15px;
             text-decoration: none;
         }
 
         .tg-link:active {
-            transform: translateY(4px);
-            box-shadow: 0 3px 0 #146b9e;
+            transform: translateY(8px);
+            box-shadow: 0 2px 0 #b36b1e;
         }
 
         .year-note {
-            font-size: 1rem;
-            color: #9b6d34;
-            background: #ffeeab;
+            font-size: 1.1rem;
+            color: #8b5a2b;
+            background: #fff2b5;
             display: inline-block;
-            padding: 4px 20px;
-            border-radius: 40px;
-            border: 1px solid #ffc107;
-            margin-top: 12px;
+            padding: 6px 25px;
+            border-radius: 50px;
+            border: 2px solid #ffaa33;
+            margin-top: 15px;
+            font-weight: bold;
         }
 
         @media (max-width: 450px) {
             .card { max-width: 95%; }
-            .nick { font-size: 2rem; }
-            .cat-corner { width: 80px; }
+            .nick { font-size: 2.2rem; }
+            .cat-corner { width: 90px; }
         }
     </style>
 </head>
@@ -558,7 +580,7 @@
             <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/OMFG/OMFG_-_Hello/OMFG_-_01_-_Hello.mp3" type="audio/mpeg">
             <source src="https://ia800708.us.archive.org/5/items/OMFGHello/OMFG%20-%20Hello.mp3" type="audio/mpeg">
         </audio>
-        <p style="font-size:0.75rem; margin:4px 0 0;">♫ OMFG – Hello</p>
+        <p style="font-size:0.75rem; margin:4px 0 0; color:#8b5a2b;">♫ OMFG – Hello</p>
 
         <!-- ЧАЙ -->
         <div class="tea-container" id="teaContainer">
@@ -576,9 +598,8 @@
 
         <!-- КОММЕНТАРИИ -->
         <div class="comments-section">
-            <!-- Настройка ника -->
             <div class="nickname-setup" id="nicknameSetup">
-                <input type="text" class="nickname-input" id="nicknameInput" placeholder="Введите ваш ник..." maxlength="20">
+                <input type="text" class="nickname-input" id="nicknameInput" placeholder="Твой ник..." maxlength="20">
                 <button class="save-nickname" id="saveNickname">Сохранить ник</button>
                 <div class="current-nick" id="currentNick">Ник не установлен</div>
             </div>
@@ -601,16 +622,18 @@
     </div>
 
     <script>
-        // ========== ЗАГРУЗКА ДАННЫХ ИЗ localStorage ==========
-        let views = localStorage.getItem('views') ? parseInt(localStorage.getItem('views')) : 0;
-        let likes = localStorage.getItem('likes') ? parseInt(localStorage.getItem('likes')) : 0;
-        let dislikes = localStorage.getItem('dislikes') ? parseInt(localStorage.getItem('dislikes')) : 0;
-        let userReaction = localStorage.getItem('userReaction') || null;
-        let userNickname = localStorage.getItem('userNickname') || '';
-        let comments = JSON.parse(localStorage.getItem('comments')) || [];
+        // ========== НАСТРОЙКИ JSONBIN.IO ==========
+        const BIN_ID = '699afbe0d0ea881f40cf01a3';
+        const API_KEY = '$2a$10$6JBU43OugEDlYTeh0682aOIUaRKgRnYQRk4whaC0OeEdy598VG31u';
+        const BASE_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-        // Сессия для просмотров
-        let hasViewedThisSession = sessionStorage.getItem('hasViewed') === 'true';
+        // ========== ЗАГРУЗКА ДАННЫХ ==========
+        let views = 0;
+        let likes = 0;
+        let dislikes = 0;
+        let userReaction = null;
+        let userNickname = '';
+        let comments = [];
 
         // Элементы
         const viewSpan = document.getElementById('viewCount');
@@ -629,20 +652,81 @@
         const newCommentInput = document.getElementById('newComment');
         const addCommentBtn = document.getElementById('addCommentBtn');
 
-        // ========== ИНИЦИАЛИЗАЦИЯ ==========
+        // ========== ФУНКЦИИ РАБОТЫ С JSONBIN ==========
+        async function loadData() {
+            try {
+                const response = await fetch(`${BASE_URL}/latest`, {
+                    headers: { 'X-Master-Key': API_KEY }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка загрузки');
+                }
+                
+                const data = await response.json();
+                
+                views = data.record.views || 0;
+                likes = data.record.likes || 0;
+                dislikes = data.record.dislikes || 0;
+                comments = data.record.comments || [];
+                
+                // Сессия для просмотров
+                const hasViewed = sessionStorage.getItem('hasViewed') === 'true';
+                if (!hasViewed) {
+                    views++;
+                    sessionStorage.setItem('hasViewed', 'true');
+                    await saveData({ views, likes, dislikes, comments });
+                }
+                
+                updateDisplay();
+            } catch (error) {
+                console.error('Ошибка загрузки:', error);
+                // Заглушка если не загрузилось
+                views = 0;
+                likes = 0;
+                dislikes = 0;
+                comments = [];
+                updateDisplay();
+            }
+        }
+
+        async function saveData(data) {
+            try {
+                const response = await fetch(BASE_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': API_KEY
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Ошибка сохранения');
+                }
+            } catch (error) {
+                console.error('Ошибка сохранения:', error);
+            }
+        }
+
+        // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ==========
         function updateDisplay() {
             viewSpan.textContent = views;
             likeSpan.textContent = likes;
             dislikeSpan.textContent = dislikes;
             
+            // Восстанавливаем реакцию из localStorage (только для текущего пользователя)
+            userReaction = localStorage.getItem('userReaction') || null;
             if (userReaction === 'like') {
                 likeBtn.classList.add('liked');
             } else if (userReaction === 'dislike') {
                 dislikeBtn.classList.add('liked');
             }
             
+            // Никнейм из localStorage
+            userNickname = localStorage.getItem('userNickname') || '';
             if (userNickname) {
-                currentNickSpan.textContent = `Ваш ник: ${userNickname}`;
+                currentNickSpan.textContent = `Твой ник: ${userNickname}`;
                 nicknameInput.value = userNickname;
                 nicknameInput.disabled = true;
                 saveNickname.disabled = true;
@@ -651,15 +735,8 @@
             renderComments();
         }
 
-        // ========== ПРОСМОТРЫ (ТОЛЬКО 1 ЗА СЕССИЮ) ==========
-        if (!hasViewedThisSession) {
-            views++;
-            localStorage.setItem('views', views);
-            sessionStorage.setItem('hasViewed', 'true');
-        }
-
         // ========== РЕАКЦИИ ==========
-        likeBtn.addEventListener('click', function() {
+        likeBtn.addEventListener('click', async function() {
             if (userReaction === 'like') {
                 likes--;
                 userReaction = null;
@@ -677,12 +754,11 @@
             likeSpan.textContent = likes;
             dislikeSpan.textContent = dislikes;
             
-            localStorage.setItem('likes', likes);
-            localStorage.setItem('dislikes', dislikes);
             localStorage.setItem('userReaction', userReaction);
+            await saveData({ views, likes, dislikes, comments });
         });
 
-        dislikeBtn.addEventListener('click', function() {
+        dislikeBtn.addEventListener('click', async function() {
             if (userReaction === 'dislike') {
                 dislikes--;
                 userReaction = null;
@@ -700,12 +776,11 @@
             likeSpan.textContent = likes;
             dislikeSpan.textContent = dislikes;
             
-            localStorage.setItem('likes', likes);
-            localStorage.setItem('dislikes', dislikes);
             localStorage.setItem('userReaction', userReaction);
+            await saveData({ views, likes, dislikes, comments });
         });
 
-        // ========== ЗВУКИ (ПРИНУДИТЕЛЬНАЯ ЗАГРУЗКА) ==========
+        // ========== ЗВУКИ ==========
         function playSound(type) {
             const audio = new Audio();
             if (type === 'cat') {
@@ -717,7 +792,6 @@
             audio.play().catch(e => console.log('Звук не воспроизвёлся:', e));
         }
 
-        // Кот
         cat.addEventListener('click', function() {
             playSound('cat');
             this.style.transform = 'scale(0.95)';
@@ -726,7 +800,6 @@
             }, 200);
         });
 
-        // Чай
         teaCup.addEventListener('click', function() {
             this.classList.add('drinking');
             playSound('tea');
@@ -770,25 +843,24 @@
                 commentsList.appendChild(commentDiv);
             });
             
-            // Добавляем обработчики для кнопок редактирования/удаления
             document.querySelectorAll('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
+                btn.addEventListener('click', async function(e) {
                     e.stopPropagation();
                     const index = this.dataset.index;
-                    editComment(index);
+                    await editComment(index);
                 });
             });
             
             document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
+                btn.addEventListener('click', async function(e) {
                     e.stopPropagation();
                     const index = this.dataset.index;
-                    deleteComment(index);
+                    await deleteComment(index);
                 });
             });
         }
 
-        function editComment(index) {
+        async function editComment(index) {
             const comment = comments[index];
             const textElement = document.getElementById(`comment-text-${index}`);
             const oldText = comment.text;
@@ -803,31 +875,31 @@
             textElement.appendChild(input);
             input.focus();
             
-            input.addEventListener('keypress', function(e) {
+            input.addEventListener('keypress', async function(e) {
                 if (e.key === 'Enter') {
-                    saveEdit();
+                    await saveEdit();
                 }
             });
             
             input.addEventListener('blur', saveEdit);
             
-            function saveEdit() {
+            async function saveEdit() {
                 const newText = input.value.trim();
                 if (newText && newText !== oldText) {
                     comment.text = newText;
                     comment.time = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-                    localStorage.setItem('comments', JSON.stringify(comments));
+                    await saveData({ views, likes, dislikes, comments });
                     renderComments();
                 } else {
-                    renderComments(); // Просто перерисовываем без изменений
+                    renderComments();
                 }
             }
         }
 
-        function deleteComment(index) {
+        async function deleteComment(index) {
             if (confirm('Удалить комментарий?')) {
                 comments.splice(index, 1);
-                localStorage.setItem('comments', JSON.stringify(comments));
+                await saveData({ views, likes, dislikes, comments });
                 renderComments();
             }
         }
@@ -837,7 +909,7 @@
             const nick = nicknameInput.value.trim();
             if (nick) {
                 userNickname = nick;
-                currentNickSpan.textContent = `Ваш ник: ${userNickname}`;
+                currentNickSpan.textContent = `Твой ник: ${userNickname}`;
                 nicknameInput.disabled = true;
                 this.disabled = true;
                 localStorage.setItem('userNickname', userNickname);
@@ -853,7 +925,7 @@
         });
 
         // Добавление комментария
-        addCommentBtn.addEventListener('click', function() {
+        addCommentBtn.addEventListener('click', async function() {
             const text = newCommentInput.value.trim();
             
             if (text && userNickname) {
@@ -865,27 +937,24 @@
                     time: time
                 });
                 
-                localStorage.setItem('comments', JSON.stringify(comments));
+                await saveData({ views, likes, dislikes, comments });
                 
                 renderComments();
                 newCommentInput.value = '';
-                
-                // Скролл вниз
                 commentsList.scrollTop = commentsList.scrollHeight;
             } else if (!userNickname) {
-                alert('Сначала введите никнейм');
+                alert('Сначала введи никнейм!');
             }
         });
 
-        // Enter в поле комментария
         newCommentInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 addCommentBtn.click();
             }
         });
 
-        // Инициализация
-        updateDisplay();
+        // ========== ЗАПУСК ==========
+        loadData();
     </script>
 </body>
 </html>
