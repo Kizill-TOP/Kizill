@@ -51,31 +51,35 @@
             z-index: -1;
         }
 
-        /* КОТ В УГЛУ */
+        /* КОТ В УГЛУ - ФИКСИРОВАННЫЙ */
         .cat-corner {
             position: fixed;
             bottom: 20px;
             right: 20px;
             width: 120px;
             height: auto;
-            z-index: 10;
+            z-index: 1000; /* повышенный z-index */
             opacity: 0.9;
             transition: transform 0.3s ease;
             cursor: pointer;
+            pointer-events: auto; /* гарантируем кликабельность */
         }
         
         .cat-corner img {
             width: 100%;
             height: auto;
             display: block;
-            pointer-events: none;
+            border-radius: 20px; /* для красоты */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            border: 3px solid #ffd700;
         }
         
         .cat-corner:hover {
             transform: scale(1.1) rotate(-3deg);
+            opacity: 1;
         }
 
-        /* Мурчалка (аудио для кота) - скрытый элемент */
+        /* Мурчалка */
         #cat-purr {
             display: none;
         }
@@ -95,6 +99,8 @@
             transform-origin: center;
             transition: transform 0.1s ease-out;
             will-change: transform;
+            position: relative; /* для контекста */
+            z-index: 1;
         }
 
         @keyframes gentleFloat {
@@ -102,62 +108,19 @@
             50% { transform: translateY(-3px); }
         }
 
-        /* СЧЁТЧИК ПРОСМОТРОВ */
+        /* ПРОСТОЙ СЧЁТЧИК ПРОСМОТРОВ (БЕЗ НАКРУТКИ) */
         .views-counter {
             background: rgba(255, 255, 255, 0.9);
             border-radius: 50px;
-            padding: 8px 16px;
+            padding: 5px 12px;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
             margin-bottom: 15px;
             border: 2px solid #ffd700;
             font-weight: bold;
             color: #6441a4;
-            box-shadow: 0 4px 0 #b37b48;
-        }
-
-        .views-counter i {
-            color: #ff6b6b;
-        }
-
-        /* РЕАКЦИИ */
-        .reactions {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 15px 0;
-        }
-
-        .reaction-btn {
-            background: white;
-            border: none;
-            border-radius: 50px;
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 5px 0 #b37b48, 0 3px 10px rgba(0,0,0,0.2);
-            transition: all 0.1s ease;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            border: 2px solid #ffd700;
-        }
-
-        .reaction-btn:active {
-            transform: translateY(5px);
-            box-shadow: 0 2px 0 #b37b48;
-        }
-
-        .reaction-btn.liked {
-            background: #ffd700;
-            color: #333;
-        }
-
-        .reaction-count {
-            font-size: 1rem;
-            color: #666;
+            font-size: 0.9rem;
         }
 
         /* ЧАЙ */
@@ -207,7 +170,7 @@
             100% { transform: translateX(-50%) translateY(-30px); opacity: 0; }
         }
 
-        /* КОММЕНТАРИИ */
+        /* КОММЕНТАРИИ - ПРОСТЫЕ, БЕЗ СОХРАНЕНИЯ */
         .comments-section {
             margin-top: 20px;
             border-top: 2px dashed #ffae3c;
@@ -237,15 +200,15 @@
         .comments-box {
             background: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
-            padding: 15px;
+            padding: 0;
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-out, padding 0.3s;
+            transition: max-height 0.5s ease-out;
             border: 2px solid #ffae3c;
         }
 
         .comments-box.show {
-            max-height: 300px;
+            max-height: 400px;
             padding: 15px;
             overflow-y: auto;
         }
@@ -431,6 +394,7 @@
         @media (max-width: 450px) {
             .card { max-width: 95%; }
             .nick { font-size: 2rem; }
+            .cat-corner { width: 80px; } /* меньше на мобилках */
         }
     </style>
 </head>
@@ -440,7 +404,7 @@
         <source src="https://www.soundjay.com/misc/sounds/cat-purring-1.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Кот -->
+    <!-- КОТ - фиксированная позиция, всегда виден -->
     <div class="cat-corner" id="catCorner">
         <img src="https://i.supaimg.com/35109a74-45db-4273-8c8b-a2cf76a8841a/c5066638-ec29-474b-b28c-14405dbf6fca.png" 
              alt="Котик"
@@ -448,10 +412,10 @@
     </div>
 
     <div class="card" id="mainCard">
-        <!-- Счётчик просмотров -->
+        <!-- ПРОСТОЙ СЧЁТЧИК ПРОСМОТРОВ (ФИКСИРОВАННЫЙ) -->
         <div class="views-counter">
             <i class="fas fa-eye"></i>
-            <span id="viewCount">1,337</span> просмотров
+            <span id="viewCount">1337</span> просмотров
         </div>
 
         <!-- Аватарка -->
@@ -461,18 +425,6 @@
 
         <!-- Ник -->
         <div class="nick">Kizill_TOP</div>
-
-        <!-- Реакции -->
-        <div class="reactions">
-            <button class="reaction-btn" id="likeBtn">
-                <i class="fas fa-heart"></i>
-                <span id="likeCount">128</span>
-            </button>
-            <button class="reaction-btn" id="dislikeBtn">
-                <i class="fas fa-thumbs-down"></i>
-                <span id="dislikeCount">12</span>
-            </button>
-        </div>
 
         <!-- Музыка -->
         <div class="music-player">
@@ -489,7 +441,7 @@
         </audio>
         <p style="font-size:0.75rem; margin:4px 0 0;">♫ OMFG – Hello</p>
 
-        <!-- Чай -->
+        <!-- ЧАЙ с анимацией -->
         <div class="tea-container" id="teaContainer">
             <div class="tea-cup" id="teaCup">☕</div>
             <div class="tea-steam">💨</div>
@@ -503,19 +455,20 @@
             <i class="fab fa-telegram-plane"></i>
         </a>
 
-        <!-- Комментарии -->
+        <!-- КОММЕНТАРИИ (БЕЗ СОХРАНЕНИЯ) -->
         <div class="comments-section">
             <button class="toggle-comments" id="toggleComments">
-                <i class="fas fa-comments"></i> Комментарии (3)
+                <i class="fas fa-comments"></i> Комментарии
             </button>
             
             <div class="comments-box" id="commentsBox">
+                <!-- Предустановленные комментарии (не сохраняются) -->
                 <div class="comment">
                     <div class="comment-avatar">👤</div>
                     <div class="comment-content">
                         <div class="comment-author">Летний_Чилл</div>
                         <div class="comment-text">атмосфера лета 2016 🔥</div>
-                        <div class="comment-time">2 минуты назад</div>
+                        <div class="comment-time">только что</div>
                     </div>
                 </div>
                 
@@ -524,20 +477,11 @@
                     <div class="comment-content">
                         <div class="comment-author">Кот_Олег</div>
                         <div class="comment-text">мяу чай норм</div>
-                        <div class="comment-time">15 минут назад</div>
+                        <div class="comment-time">только что</div>
                     </div>
                 </div>
                 
-                <div class="comment">
-                    <div class="comment-avatar">🎧</div>
-                    <div class="comment-content">
-                        <div class="comment-author">OMFG_Fan</div>
-                        <div class="comment-text">hello hello hello!!</div>
-                        <div class="comment-time">1 час назад</div>
-                    </div>
-                </div>
-                
-                <!-- Добавление комментария -->
+                <!-- Добавление комментария (не сохраняется при обновлении) -->
                 <div class="add-comment">
                     <input type="text" id="newComment" placeholder="Написать комментарий...">
                     <button id="addCommentBtn">Отпр.</button>
@@ -549,14 +493,14 @@
     </div>
 
     <script>
-        // ГИРОСКОП - движение элементов
+        // ГИРОСКОП - движение элементов (только если поддерживается)
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function(event) {
                 let gamma = event.gamma; // -90 до 90 (влево-вправо)
                 let beta = event.beta;    // -180 до 180 (вперед-назад)
                 
                 if (gamma !== null && beta !== null) {
-                    // Ограничиваем значения
+                    // Ограничиваем значения для плавности
                     gamma = Math.min(30, Math.max(-30, gamma)) / 30;
                     beta = Math.min(30, Math.max(-30, beta)) / 30;
                     
@@ -565,77 +509,7 @@
                     card.style.transform = `perspective(500px) rotateY(${gamma * 5}deg) rotateX(${beta * -3}deg) translateY(-3px)`;
                 }
             });
-        } else {
-            console.log("Гироскоп не поддерживается");
         }
-
-        // СЧЁТЧИК ПРОСМОТРОВ (увеличиваем при загрузке)
-        let views = localStorage.getItem('pageViews') ? parseInt(localStorage.getItem('pageViews')) : 1337;
-        views++;
-        localStorage.setItem('pageViews', views);
-        document.getElementById('viewCount').textContent = views.toLocaleString();
-
-        // РЕАКЦИИ
-        let likes = localStorage.getItem('likes') ? parseInt(localStorage.getItem('likes')) : 128;
-        let dislikes = localStorage.getItem('dislikes') ? parseInt(localStorage.getItem('dislikes')) : 12;
-        
-        document.getElementById('likeCount').textContent = likes;
-        document.getElementById('dislikeCount').textContent = dislikes;
-        
-        let userReaction = localStorage.getItem('userReaction') || null;
-        
-        if (userReaction === 'like') {
-            document.getElementById('likeBtn').classList.add('liked');
-        } else if (userReaction === 'dislike') {
-            document.getElementById('dislikeBtn').classList.add('liked');
-        }
-        
-        document.getElementById('likeBtn').addEventListener('click', function() {
-            if (userReaction === 'like') {
-                // Убираем лайк
-                likes--;
-                userReaction = null;
-                this.classList.remove('liked');
-            } else {
-                if (userReaction === 'dislike') {
-                    dislikes--;
-                    document.getElementById('dislikeBtn').classList.remove('liked');
-                }
-                likes++;
-                userReaction = 'like';
-                this.classList.add('liked');
-            }
-            
-            document.getElementById('likeCount').textContent = likes;
-            document.getElementById('dislikeCount').textContent = dislikes;
-            
-            localStorage.setItem('likes', likes);
-            localStorage.setItem('dislikes', dislikes);
-            localStorage.setItem('userReaction', userReaction);
-        });
-        
-        document.getElementById('dislikeBtn').addEventListener('click', function() {
-            if (userReaction === 'dislike') {
-                dislikes--;
-                userReaction = null;
-                this.classList.remove('liked');
-            } else {
-                if (userReaction === 'like') {
-                    likes--;
-                    document.getElementById('likeBtn').classList.remove('liked');
-                }
-                dislikes++;
-                userReaction = 'dislike';
-                this.classList.add('liked');
-            }
-            
-            document.getElementById('likeCount').textContent = likes;
-            document.getElementById('dislikeCount').textContent = dislikes;
-            
-            localStorage.setItem('likes', likes);
-            localStorage.setItem('dislikes', dislikes);
-            localStorage.setItem('userReaction', userReaction);
-        });
 
         // КОТ МУРЛЫКАЕТ
         const cat = document.getElementById('catCorner');
@@ -649,11 +523,15 @@
                 isPurring = false;
                 this.style.opacity = '0.9';
             } else {
-                purrAudio.play().catch(e => console.log("Аудио не загрузилось"));
+                // Пытаемся воспроизвести (может быть заблокировано браузером)
+                purrAudio.play().catch(e => {
+                    console.log("Аудио не загрузилось, но кот всё равно классный");
+                    // Визуальный фидбек даже без звука
+                });
                 isPurring = true;
                 this.style.opacity = '1';
                 
-                // Останавливаем через 5 секунд автоматически
+                // Автоотключение через 4 секунды
                 setTimeout(() => {
                     if (isPurring) {
                         purrAudio.pause();
@@ -661,29 +539,22 @@
                         isPurring = false;
                         cat.style.opacity = '0.9';
                     }
-                }, 5000);
+                }, 4000);
             }
         });
 
-        // ЧАЙ
+        // ЧАЙ - анимация при клике
         const teaCup = document.getElementById('teaCup');
         
         teaCup.addEventListener('click', function() {
             this.classList.add('drinking');
             
-            // Анимация испарения
             setTimeout(() => {
                 this.classList.remove('drinking');
             }, 800);
-            
-            // Меняем иконку чая на немного другую (эффект "отпили")
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 200);
         });
 
-        // КОММЕНТАРИИ
+        // КОММЕНТАРИИ - открытие/закрытие
         const toggleBtn = document.getElementById('toggleComments');
         const commentsBox = document.getElementById('commentsBox');
         let commentsVisible = false;
@@ -693,10 +564,10 @@
             commentsBox.classList.toggle('show', commentsVisible);
             this.innerHTML = commentsVisible ? 
                 '<i class="fas fa-comments"></i> Скрыть комментарии' : 
-                '<i class="fas fa-comments"></i> Комментарии (3)';
+                '<i class="fas fa-comments"></i> Комментарии';
         });
         
-        // Добавление комментария
+        // Добавление комментария (НЕ СОХРАНЯЕТСЯ)
         document.getElementById('addCommentBtn').addEventListener('click', function() {
             const input = document.getElementById('newComment');
             const text = input.value.trim();
@@ -716,13 +587,6 @@
                 
                 // Вставляем перед формой добавления
                 commentsContainer.insertBefore(newComment, document.querySelector('.add-comment'));
-                
-                // Обновляем счётчик в кнопке
-                const commentCount = document.querySelectorAll('.comment').length;
-                document.getElementById('toggleComments').innerHTML = commentsVisible ?
-                    '<i class="fas fa-comments"></i> Скрыть комментарии' :
-                    `<i class="fas fa-comments"></i> Комментарии (${commentCount})`;
-                
                 input.value = '';
             }
         });
