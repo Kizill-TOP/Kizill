@@ -6,6 +6,7 @@
     <title>Kizill_TOP · Лето 2016</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Все стили без изменений */
         * {
             margin: 0;
             padding: 0;
@@ -285,6 +286,7 @@
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
+            color: white;
         }
 
         .playlist-info {
@@ -630,6 +632,11 @@
     </style>
 </head>
 <body>
+    <!-- Скрытый аудио контекст для инициализации -->
+    <div style="display: none;">
+        <audio id="hiddenAudio" preload="auto"></audio>
+    </div>
+
     <!-- КОТ -->
     <div class="cat-corner" id="catCorner">
         <img src="https://i.supaimg.com/35109a74-45db-4273-8c8b-a2cf76a8841a/c5066638-ec29-474b-b28c-14405dbf6fca.png" 
@@ -755,7 +762,7 @@
                 file: "https://www.chosic.com/wp-content/uploads/2022/02/Dorian-Concept-Hide(chosic.com).mp3",
                 duration: "3:30",
                 theme: {
-                    bgColor: "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)", // СИНИЙ
+                    bgColor: "linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)",
                     cardBg: "rgba(230, 245, 255, 0.85)",
                     borderColor: "#2193b0",
                     shadow: "rgba(33, 147, 176, 0.3)",
@@ -815,6 +822,7 @@
         let userNickname = '';
         let comments = [];
         let currentTrack = 0;
+        let audioContext = null;
 
         // Элементы
         const viewSpan = document.getElementById('viewCount');
@@ -835,6 +843,32 @@
         const audioPlayer = document.getElementById('audioPlayer');
         const nowPlayingText = document.getElementById('nowPlayingText');
         const playlistItems = document.getElementById('playlistItems');
+        const hiddenAudio = document.getElementById('hiddenAudio');
+
+        // ========== ИНИЦИАЛИЗАЦИЯ АУДИО ==========
+        function initAudio() {
+            // Создаем аудио контекст при первом взаимодействии
+            if (!audioContext) {
+                try {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    // Создаем тихий звук для активации
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    gainNode.gain.value = 0.01; // Очень тихо
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 0.01);
+                } catch (e) {
+                    console.log('Web Audio API не поддерживается');
+                }
+            }
+            
+            // Пытаемся воспроизвести тихий звук через скрытый аудио элемент
+            hiddenAudio.src = 'data:audio/mp3;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTG9uZVdpbGxpcwBMAFEANAAAAAAAAAAAAAAAAAAAAC0AAABBAAAAAAADZm9vAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=';
+            hiddenAudio.volume = 0.01;
+            hiddenAudio.play().catch(() => {});
+        }
 
         // ========== ФУНКЦИИ РАБОТЫ С JSONBIN ==========
         async function loadData() {
@@ -920,7 +954,7 @@
                 item.dataset.index = index;
                 
                 item.innerHTML = `
-                    <div class="playlist-icon" style="background: ${track.theme.bgColor}; color: white;">${track.theme.icon}</div>
+                    <div class="playlist-icon" style="background: ${track.theme.bgColor};">${track.theme.icon}</div>
                     <div class="playlist-info">
                         <div class="playlist-song">${track.title}</div>
                         <div class="playlist-artist">${track.artist}</div>
@@ -943,10 +977,17 @@
             
             audioPlayer.src = track.file;
             audioPlayer.load();
-            audioPlayer.play().catch(e => {
-                console.log('Не удалось воспроизвести:', e);
-                alert('Нажми на страницу для включения звука');
-            });
+            
+            // Пытаемся воспроизвести с обработкой ошибок
+            const playPromise = audioPlayer.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log('Автовоспроизведение заблокировано:', error);
+                    // Показываем сообщение пользователю
+                    nowPlayingText.textContent = `♫ Нажми ▶ чтобы играть: ${track.title}`;
+                });
+            }
             
             currentTrack = index;
             nowPlayingText.textContent = `♫ ${track.title} – ${track.artist} (${track.duration})`;
@@ -960,6 +1001,73 @@
             });
             
             changeTheme(index);
+        }
+
+        // ========== УЛУЧШЕННАЯ ФУНКЦИЯ ВОСПРОИЗВЕДЕНИЯ ЗВУКОВ ==========
+        function playSound(type) {
+            // Инициализируем аудио при первом вызове
+            initAudio();
+            
+            // Создаем новый аудио элемент
+            const audio = new Audio();
+            
+            // Используем разные источники для надежности
+            if (type === 'cat') {
+                // Несколько источников для кота
+                const sources = [
+                    'https://www.soundjay.com/misc/sounds/cat-purring-1.mp3',
+                    'https://actions.google.com/sounds/v1/animals/cat_purr.ogg',
+                    'data:audio/mp3;base64,SUQzBAAAAAABEVRYWFgAAAAtAAADY29tbWVudABCaWdTb3VuZEJhbmsuY29tIC8gTG9uZVdpbGxpcwBMAFEANAAAAAAAAAAAAAAAAAAAAC0AAABBAAAAAAADZm9vAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='
+                ];
+                audio.src = sources[Math.floor(Math.random() * sources.length)];
+            } else if (type === 'tea') {
+                // Несколько источников для чая
+                const sources = [
+                    'https://www.soundjay.com/misc/sounds/slurp-1.mp3',
+                    'https://actions.google.com/sounds/v1/drinks/slurp.ogg'
+                ];
+                audio.src = sources[Math.floor(Math.random() * sources.length)];
+            }
+            
+            audio.volume = 0.3;
+            
+            // Пытаемся воспроизвести
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log('Звук не воспроизвёлся, используем Web Audio API');
+                    
+                    // Запасной вариант - Web Audio API
+                    try {
+                        if (!audioContext) {
+                            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        }
+                        
+                        if (audioContext.state === 'suspended') {
+                            audioContext.resume();
+                        }
+                        
+                        // Создаем простой звук
+                        const oscillator = audioContext.createOscillator();
+                        const gainNode = audioContext.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioContext.destination);
+                        
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = type === 'cat' ? 200 : 400;
+                        gainNode.gain.value = 0.1;
+                        
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.2);
+                    } catch (e) {
+                        console.log('Web Audio API тоже не сработал');
+                    }
+                });
+            }
+            
+            return audio;
         }
 
         // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ==========
@@ -1043,17 +1151,6 @@
         });
 
         // ========== ЗВУКИ ==========
-        function playSound(type) {
-            const audio = new Audio();
-            if (type === 'cat') {
-                audio.src = 'https://www.soundjay.com/misc/sounds/cat-purring-1.mp3';
-            } else if (type === 'tea') {
-                audio.src = 'https://www.soundjay.com/misc/sounds/slurp-1.mp3';
-            }
-            audio.volume = 0.5;
-            audio.play().catch(e => console.log('Звук не воспроизвёлся:', e));
-        }
-
         cat.addEventListener('click', function() {
             playSound('cat');
             this.style.transform = 'scale(0.95)';
@@ -1214,6 +1311,12 @@
                 addCommentBtn.click();
             }
         });
+
+        // Инициализация аудио при любом клике на странице
+        document.addEventListener('click', function initOnClick() {
+            initAudio();
+            document.removeEventListener('click', initOnClick);
+        }, { once: true });
 
         // ========== ЗАПУСК ==========
         loadData();
